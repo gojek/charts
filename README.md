@@ -7,15 +7,15 @@ This is a GO-JEK helm charts repository. This has helms that we are using at GO-
 To add the GO-JEK Incubator charts for your local client, run `helm repo add`:
 
 ```
-$ helm repo add gojek-incubator https://gojektech.github.io/charts/incubator
-"gojek-incubator" has been added to your repositories
+$ helm repo add gojektech-incubator http://charts.gojek.tech/incubator/
+"gojektech-incubator" has been added to your repositories
 ```
 
 You can then run `helm search incubator` to see the charts.
 
 ## How do I install these charts?
 
-Just `helm install gojek-incubator/<chart>`. 
+Just `helm install gojektech-incubator/<chart>`. 
 
 For more information on using Helm, refer to the [Helm's documentation](https://github.com/kubernetes/helm#docs).
 
