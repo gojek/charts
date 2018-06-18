@@ -1,0 +1,62 @@
+stolon:
+  clusterName: foo-bar
+  image:
+    name: sorintlab/stolon
+    tag: master-pg10
+  proxy:
+    replicas: 3
+    expose: false
+    debug: false
+  keeper:
+    replicas: 3
+    debug: false
+    # Required when initMode=existing
+    # pvcName:
+  sentinel:
+    replicas: 5
+    debug: false
+  ## Cluster Specification:
+  ## https://github.com/sorintlab/stolon/blob/master/doc/cluster_spec.md
+  # clusterSpecification:
+    # Cluster initialization
+    # https://github.com/sorintlab/stolon/blob/master/doc/initialization.md
+    # initMode: new | existing
+    # existingConfig:
+    #   keeperUID: automatically set to first keeper's UID when initMode=existing
+etcdoperator:
+  create: false
+  image:
+    tag: v0.6.1
+store:
+  name: config-store
+  size: 3
+  version: 3.2.9
+  ## etcd store endpoint
+  endpoint: localhost:2379
+postgres:
+  replication:
+    username: repluser
+  application:
+    username: stolon
+    dbname: stolon
+
+## Persist data to a persitent volume
+persistence:
+  enabled: true
+  storageClass: ssd
+
+  ## A manually managed Persistent Volume and Claim
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  # existingClaim:
+
+  ## database data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "-"
+  accessMode: ReadWriteOnce
+  size: 50Gi

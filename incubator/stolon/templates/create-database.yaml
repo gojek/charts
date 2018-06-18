@@ -1,0 +1,49 @@
+{{- if eq (include "cluster.specification.initMode" .) "new" -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: '{{template "cluster.fullname" .}}-createdb'
+  labels:
+    heritage: {{.Release.Service | quote }}
+    release: {{.Release.Name | quote }}
+    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "2"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{.Release.Name}}"
+      labels:
+        heritage: {{.Release.Service | quote }}
+        release: {{.Release.Name | quote }}
+        chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: create-database-job
+        image: 'postgres'
+        env:
+          - name: USERNAME
+            value: "{{- .Values.postgres.application.username -}}"
+          - name: PGPASSWORD
+            value: "/etc/secrets/stolon/password"
+          - name: HOST
+            value: '{{ template "proxy.service" . }}'
+        command:
+          - bash
+          - "-c"
+          - "PGPASSWORD=`cat /etc/secrets/stolon/password` createdb -h $HOST -U $USERNAME --no-password {{.Values.postgres.application.dbname}}"
+        volumeMounts:
+        - mountPath: /etc/secrets/stolon
+          name: stolon
+      volumes:
+        - name: stolon
+          secret:
+            secretName: {{ template "secret.fullname" . }}
+      initContainers:
+        - name: wait-for-database
+          image: jwilder/dockerize
+          command: ['dockerize', '-timeout', '30s', '-wait', 'tcp://{{ template "proxy.service" . }}:5432']
+{{- end -}}

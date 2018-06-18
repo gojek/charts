@@ -1,0 +1,32 @@
+Postgres can be accessed via port 5432 on the following DNS name from within your cluster:
+
+{{ template "proxy.service" . }}.{{.Release.Namespace}}.svc.cluster.local
+
+To get your password run:
+
+  sh/bash/zsh shell:
+
+    PGPASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "secret.fullname" . }} -o jsonpath="{.data.password}" | base64 --decode)
+
+  fish shell:
+
+    export PGPASSWORD=(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "secret.fullname" . }} -o jsonpath="{.data.password}" | base64 --decode)
+
+To connect to your Postgres cluster:
+
+1. Run a PostgreSQL pod that you can use as a client:
+
+  kubectl run pgclient -n {{ .Release.Namespace }} --image=postgres --env PGPASSWORD=$PGPASSWORD -it --rm -- bash
+
+2. Inside the client run:
+
+  psql -U {{.Values.postgres.application.username}} -d {{.Values.postgres.application.dbname}} -h {{ template "proxy.service" . }}
+
+{{- if .Values.stolon.proxy.expose }}
+
+
+Proxy service is exposed via LoadBalancer. Run the below command to get the IPs:
+
+kubectl get service --namespace {{ .Release.Namespace }} {{ template "proxy.service" . }} -o jsonpath='{range .status.loadBalancer.ingress[*]}{"\t"}{.ip}{"\n"}{end}'
+
+{{- end }}

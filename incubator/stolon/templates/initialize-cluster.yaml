@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: '{{template "cluster.fullname" .}}-initialize-cluster'
+  labels:
+    heritage: {{.Release.Service | quote }}
+    release: {{.Release.Name | quote }}
+    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{.Release.Name}}"
+      labels:
+        heritage: {{.Release.Service | quote }}
+        release: {{.Release.Name | quote }}
+        chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: cluster-initialize-job
+        image: '{{- .Values.stolon.image.name -}}:{{- .Values.stolon.image.tag -}}'
+        command:
+          - 'stolonctl'
+          - '--cluster-name={{ template "cluster.fullname" . }}'
+          - '--store-backend=etcd'
+          - '--store-endpoints'
+          - '{{ template "store.endpoint" . }}'
+          - 'init'
+          - '--yes'
+          - '{{template "cluster.specification.json" .}}'
+      initContainers:
+        - name: wait-for-store
+          image: jwilder/dockerize
+          command: ['dockerize', '-timeout', '120s', '-wait', '{{ template "store.endpoint" . }}/health']

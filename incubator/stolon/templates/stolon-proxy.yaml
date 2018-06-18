@@ -1,0 +1,49 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "proxy.fullname" . }}
+  labels:
+    release: {{.Release.Name | quote }}
+spec:
+  replicas: {{.Values.stolon.proxy.replicas}}
+  selector:
+    matchLabels:
+      name: {{ template "proxy.fullname" . }}
+  template:
+    metadata:
+      labels:
+        name: {{ template "proxy.fullname" . }}
+        release: {{.Release.Name | quote }}
+        stolon-cluster: {{ template "cluster.fullname" . }}
+        stolon-proxy: "true"
+    spec:
+      initContainers:
+        - name: init-stolon-sentinel
+          image: jwilder/dockerize
+          command: ['dockerize', '-timeout', '120s', '-wait', '{{ template "store.endpoint" . }}/health']
+      containers:
+      - name: {{ template "proxy.fullname" . }}
+        image: '{{- .Values.stolon.image.name -}}:{{- .Values.stolon.image.tag -}}'
+        command:
+          - "/bin/bash"
+          - "-ec"
+          - |
+            exec gosu stolon stolon-proxy
+        env:
+          - name: STPROXY_CLUSTER_NAME
+            value: {{ template "cluster.fullname" . }}
+          - name: STPROXY_STORE_BACKEND
+            value: "etcd"
+          - name: STPROXY_STORE_ENDPOINTS
+            value: {{ template "store.endpoint" . }}
+          - name: STKEEPER_DEBUG
+            value: "{{- .Values.stolon.proxy.debug -}}"
+          - name: STPROXY_LISTEN_ADDRESS
+            value: "0.0.0.0"
+        ports:
+          - containerPort: 5432
+        readinessProbe:
+          tcpSocket:
+            port: 5432
+          initialDelaySeconds: 10
+          timeoutSeconds: 5

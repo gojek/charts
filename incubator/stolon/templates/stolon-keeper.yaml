@@ -1,0 +1,71 @@
+{{- $root := . -}}
+
+{{ range $count, $e := until ((int .Values.stolon.keeper.replicas) | default 3) }}
+{{ $keeperUID :=  include "keeper.UID" (dict "root" $root "count" $count) }}
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: '{{ template "keeper.fullname" $root }}-{{ $count }}'
+  labels:
+      release: {{ $root.Release.Name | quote }}
+spec:
+  serviceName: '{{ template "keeper.fullname" $root }}-{{ $count }}'
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: '{{ template "keeper.fullname" $root }}-{{ $count }}'
+        release: {{ $root.Release.Name | quote }}
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      terminationGracePeriodSeconds: 10
+      initContainers:
+        - name: wait-for-store
+          image: jwilder/dockerize
+          command: ['dockerize', '-timeout', '120s', '-wait', '{{ template "store.endpoint" $root }}/health']
+      containers:
+      - name: '{{ template "keeper.fullname" $root }}-{{ $count }}'
+        image: '{{- $root.Values.stolon.image.name -}}:{{- $root.Values.stolon.image.tag -}}'
+        command:
+          - "/bin/bash"
+          - "-ec"
+          - |
+            export STKEEPER_UID="{{ $keeperUID }}"
+            export POD_IP=$(hostname -i)
+            export STKEEPER_PG_LISTEN_ADDRESS=$POD_IP
+            export STOLON_DATA=/stolon-data
+            chown -R stolon:stolon $STOLON_DATA
+            exec gosu stolon stolon-keeper --data-dir $STOLON_DATA
+        env:
+          - name: STKEEPER_CLUSTER_NAME
+            value: {{ template "cluster.fullname" $root }}
+          - name: STKEEPER_STORE_BACKEND
+            value: "etcd"
+          - name: STKEEPER_STORE_ENDPOINTS
+            value: {{ template "store.endpoint" $root }}
+          - name: STKEEPER_DEBUG
+            value: "{{- $root.Values.stolon.keeper.debug -}}"
+          - name: STKEEPER_PG_REPL_USERNAME
+            value: "{{- $root.Values.postgres.replication.username -}}"
+          - name: STKEEPER_PG_REPL_PASSWORDFILE
+            value: "/etc/secrets/stolon/replpassword"
+          - name: STKEEPER_PG_SU_USERNAME
+            value: "{{- $root.Values.postgres.application.username -}}"
+          - name: STKEEPER_PG_SU_PASSWORDFILE
+            value: "/etc/secrets/stolon/password"
+        ports:
+          - containerPort: 5432
+        volumeMounts:
+        - mountPath: /stolon-data
+          name: data
+        - mountPath: /etc/secrets/stolon
+          name: stolon
+      volumes:
+        - name: stolon
+          secret:
+            secretName: {{ template "secret.fullname" $root }}
+        {{ template "keeper.volume.existing" (dict "root" $root "count" $count) }}
+  {{ template "keeper.volume.new" (dict "root" $root "count" $count) }}
+---
+{{ end }}

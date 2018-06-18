@@ -1,0 +1,6 @@
+charts/
+public/
+example/
+*.tgz
+.DS_Store
+*.swp
