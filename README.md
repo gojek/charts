@@ -11,7 +11,7 @@ $ helm repo add gojektech-incubator http://charts.gojek.tech/incubator/
 "gojektech-incubator" has been added to your repositories
 ```
 
-You can then run `helm search incubator` to see the charts.
+You can then run `helm search gojektech-incubator` to see the charts.
 
 ## How do I install these charts?
 
