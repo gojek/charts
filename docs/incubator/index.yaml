@@ -3,7 +3,7 @@ entries:
   stolon:
   - apiVersion: v1
     appVersion: 0.7.0
-    created: 2018-06-18T10:48:26.696619+05:30
+    created: 2018-06-18T11:33:06.987987+05:30
     description: Helm chart for creating PostgreSQL cluster using stolon
     digest: 2b661fb12ae1042d8388ea5d5b4202e462433f4e660f328a0367ef4e2bdeef0e
     engine: gotpl
@@ -18,4 +18,4 @@ entries:
     urls:
     - stolon/stolon-0.4.0.tgz
     version: 0.4.0
-generated: 2018-06-18T10:48:26.695929+05:30
+generated: 2018-06-18T11:33:06.987324+05:30
