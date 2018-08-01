@@ -3,9 +3,9 @@ entries:
   stolon:
   - apiVersion: v1
     appVersion: 0.7.0
-    created: 2018-06-18T11:33:06.987987+05:30
+    created: 2018-08-01T13:41:25.419743112+05:30
     description: Helm chart for creating PostgreSQL cluster using stolon
-    digest: 2b661fb12ae1042d8388ea5d5b4202e462433f4e660f328a0367ef4e2bdeef0e
+    digest: 03178ae186fc78f3714b5b15124ae3f2d2c3572d5645d747583813bc1233a62f
     engine: gotpl
     home: https://source.golabs.io/leap/helm-charts
     icon: https://github.com/sorintlab/stolon/blob/master/logos/stolon-color.png
@@ -18,4 +18,38 @@ entries:
     urls:
     - stolon/stolon-0.4.0.tgz
     version: 0.4.0
-generated: 2018-06-18T11:33:06.987324+05:30
+  telegraf:
+  - appVersion: "1.5"
+    created: 2018-08-01T13:41:25.420269281+05:30
+    deprecated: true
+    description: Telegraf is an agent written in Go for collecting, processing, aggregating,
+      and writing metrics.
+    digest: d2bc5b73be80b771183a75f9366f3b3874a09a9fe13913bb872c0d3789e1d9c6
+    engine: gotpl
+    home: https://www.influxdata.com/time-series-platform/telegraf/
+    keywords:
+    - telegraf
+    - collector
+    - timeseries
+    - influxdata
+    maintainers:
+    - email: jack@influxdb.com
+      name: Jack Zampolin
+    name: telegraf
+    urls:
+    - telegraf/telegraf-0.3.3.tgz
+    version: 0.3.3
+  twemproxy:
+  - apiVersion: v1
+    created: 2018-08-01T13:41:25.420472406+05:30
+    description: A Helm chart for creating a twemproxy cluster
+    digest: c02c584aef0c3fc95351aa7fafa45ad16c649e3b3a0fcc1cc0dadb3cac2deb48
+    keywords:
+    - redis
+    - twemproxy
+    - cluster
+    name: twemproxy
+    urls:
+    - twemproxy/twemproxy-0.1.0.tgz
+    version: 0.1.0
+generated: 2018-08-01T13:41:25.419264347+05:30

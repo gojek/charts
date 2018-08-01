@@ -4,7 +4,7 @@ image:
   repository: gojektech/twemproxy
   tag: 0.4.1
   pullPolicy: Always
-# servers: "ip1:6379:1,ip2:6379:1"
+servers: "ip1:6379:1,ip2:6379:1"
 service:
   name: twemproxy
   type: ClusterIP

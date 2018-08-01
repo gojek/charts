@@ -12,7 +12,7 @@ helm-create-chart-index(){
 helm-package-chart(){
   local chart_path="$1"
 
-  [[ $(helm lint ${chart_path} | grep -c 'Lint OK') -eq 0 ]] && \
+  [[ $(helm lint ${chart_path} | grep -c '^[ERROR]') -ne 0 ]] && \
     echo "helm lint failed for ${chart_path}, skipping..." && \
     return
 
