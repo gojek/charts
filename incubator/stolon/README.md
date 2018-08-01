@@ -20,9 +20,9 @@ This chart bootstraps a highly available PostgreSQL cluster using [Stolon](https
 ## Installation
 
 ```sh
-$ helm repo add gojek http://leap.pages.golabs.io/helm-charts/
-$ helm install stable/etcd-operator --set image.tag=v0.6.1 ## If already not running
-$ helm install gojek/postgres-cluster --name my-release
+helm repo add gojektech-incubator http://charts.gojek.tech/incubator/
+helm install stable/etcd-operator --set image.tag=v0.6.1 ## If already not running
+helm install gojektech-incubator/postgres-cluster --name my-release
 ```
 
 ## Uninstallation
