@@ -7,7 +7,7 @@ This is a GO-JEK helm charts repository. This has helms that we are using at GO-
 To add the GO-JEK Incubator charts for your local client, run `helm repo add`:
 
 ```
-$ helm repo add gojektech-incubator http://charts.gojek.tech/incubator/
+$ helm repo add gojektech-incubator https://charts.gojek.tech/incubator/
 "gojektech-incubator" has been added to your repositories
 ```
 
