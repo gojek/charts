@@ -244,7 +244,7 @@ single:
       cpu:
         percpu: false
         totalcpu: true
-      system:
+##    system:
 ##      aerospike:
 ##        servers:
 ##          - "localhost:3000"
@@ -336,10 +336,10 @@ single:
 ##      haproxy:
 ##        servers:
 ##          - "http://myhaproxy.com:1936/haproxy?stats"
-      influxdb:
-        urls:
-          - "http://influxdb-influxdb.tick:8086/debug/vars"
-        timeout: "5s"
+##    influxdb:
+##      urls:
+##        - "http://influxdb-influxdb.tick:8086/debug/vars"
+##      timeout: "5s"
 ##      lustre2:
 ##        ost_procfiles:
 ##          - "/proc/fs/lustre/obdfilter/*/stats"
@@ -433,12 +433,12 @@ single:
 ##        databases:
 ##          - "app_production"
 ##          - "testing"
-      prometheus:
-        urls:
-          - "https://kubernetes.default:443/metrics"
-        name_prefix: "prom_"
-        bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
-        insecure_skip_verify: true
+##    prometheus:
+##      urls:
+##        - "https://kubernetes.default:443/metrics"
+##      name_prefix: "prom_"
+##      bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+##      insecure_skip_verify: true
 ##        ssl_ca: /path/to/cafile
 ##        ssl_cert: /path/to/certfile
 ##        ssl_key: /path/to/keyfile
