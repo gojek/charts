@@ -2,7 +2,27 @@ apiVersion: v1
 entries:
   rabbitmq:
   - appVersion: 3.6.12
-    created: 2018-08-16T16:32:28.325558714+05:30
+    created: 2018-08-17T14:47:27.499474249+05:30
+    description: Open source message broker software that implements the Advanced
+      Message Queuing Protocol (AMQP)
+    digest: 072ae4a0ae0c368408145e1209852094df95cba971fa842a60b6e36de11824e2
+    engine: gotpl
+    home: https://www.rabbitmq.com
+    icon: https://bitnami.com/assets/stacks/rabbitmq/img/rabbitmq-stack-220x234.png
+    keywords:
+    - rabbitmq
+    - message queue
+    - AMQP
+    maintainers:
+    - name: gojektech
+    name: rabbitmq
+    sources:
+    - https://hub.docker.com/_/rabbitmq/
+    urls:
+    - rabbitmq/rabbitmq-0.6.9.tgz
+    version: 0.6.9
+  - appVersion: 3.6.12
+    created: 2018-08-17T14:47:27.499082902+05:30
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
     digest: 09ccc43904ed6321cc6fef8d3e01c5653729156bf8b37d95a524782d835d06c6
@@ -24,7 +44,7 @@ entries:
   stolon:
   - apiVersion: v1
     appVersion: 0.7.0
-    created: 2018-08-16T16:32:28.325922251+05:30
+    created: 2018-08-17T14:47:27.499842549+05:30
     description: Helm chart for creating PostgreSQL cluster using stolon
     digest: 03178ae186fc78f3714b5b15124ae3f2d2c3572d5645d747583813bc1233a62f
     engine: gotpl
@@ -41,7 +61,7 @@ entries:
     version: 0.4.0
   telegraf:
   - appVersion: "1.5"
-    created: 2018-08-16T16:32:28.326423847+05:30
+    created: 2018-08-17T14:47:27.500351751+05:30
     deprecated: true
     description: Telegraf is an agent written in Go for collecting, processing, aggregating,
       and writing metrics.
@@ -62,7 +82,7 @@ entries:
     version: 0.3.3
   twemproxy:
   - apiVersion: v1
-    created: 2018-08-16T16:32:28.326652594+05:30
+    created: 2018-08-17T14:47:27.500541154+05:30
     description: A Helm chart for creating a twemproxy cluster
     digest: c02c584aef0c3fc95351aa7fafa45ad16c649e3b3a0fcc1cc0dadb3cac2deb48
     keywords:
@@ -73,4 +93,4 @@ entries:
     urls:
     - twemproxy/twemproxy-0.1.0.tgz
     version: 0.1.0
-generated: 2018-08-16T16:32:28.325047248+05:30
+generated: 2018-08-17T14:47:27.4985572+05:30

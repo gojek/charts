@@ -16,6 +16,7 @@ configEnvs:
   RABBITMQ_NODE_TYPE: stats
   RABBITMQ_CLUSTER_NODE_NAME: ''
   RABBITMQ_VHOST: /
+  RABBITMQ_VM_MEMORY_HIGH_WATERMARK: 614M ## if change this, also change resources.requests.memory
 
 configFiles: {}
 
@@ -53,7 +54,7 @@ tls:
 ##
 resources:
   requests:
-    memory: 256Mi
+    memory: 1Gi ## if change this, also change configEnvs.RABBITMQ_VM_MEMORY_HIGH_WATERMARK
     cpu: 100m
 
 persistence:
