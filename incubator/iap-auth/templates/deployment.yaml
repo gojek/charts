@@ -29,7 +29,7 @@ spec:
               readOnly: true
           env:
             - name: REFRESH_TIME_SECONDS
-              value: {{ .Values.refreshTimeSeconds }}
+              value: '{{ .Values.refreshTimeSeconds }}'
             - name: SERVICE_ACCOUNT_CREDENTIALS
               value: /etc/iap_auth/sa.json
             - name: IAP_HOST
