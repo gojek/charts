@@ -6,7 +6,7 @@ replicaCount: 2
 
 image:
   repository: gojektech/iap-auth
-  tag: 0.1.0-b0315badc437a781036548b444b5a647280e717c
+  tag: 0.1.0-13471bc9e9513e8de770e65bcd92e1d752664f46
   pullPolicy: IfNotPresent
 
 service:
@@ -16,7 +16,7 @@ iapHost: "https://some"
 secretName: "some-name"
 clientId: "some-client"
 port: 8081
-refreshTimeSeconds: 3590
+refreshTimeSeconds: "3590s"
 resources: {}
 
 nodeSelector: {}
