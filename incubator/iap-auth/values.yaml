@@ -1,0 +1,25 @@
+# Default values for iap-auth.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  repository: gojektech/iap-auth
+  tag: 0.1.0-11436887bb6e238df0820f88d393afd3e461606a
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+secretName: "some-name"
+client_id: "some-client"
+port: 8081
+refresh_time_seconds: 3590
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

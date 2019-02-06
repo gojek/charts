@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "iap-auth.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "iap-auth.name" . }}
+    helm.sh/chart: {{ include "iap-auth.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "iap-auth.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "iap-auth.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: sa_creds
+              mountPath: "/etc/iap_auth"
+              readOnly: true
+          env:
+            - name: REFRESH_TIME_SECONDS
+              value: {{ .Values.refresh_time_seconds }}
+            - name: SERVICE_ACCOUNT_CREDENTIALS
+              value: /etc/iap_auth/sa.json
+            - name: IAP_HOST
+              value: {{ .Values.iap_host }}
+            - name: CLIENT_ID
+              value: {{ .Values.client_id }}
+            - name: LOGGER_LEVEL
+              value: {{ .Values.log_level }}
+            - name: PORT
+              value: {{ .Values.port }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+        volumes:
+          - name: sa_creds
+            secret:
+              secretName: {{ .Values.secretName }}
