@@ -16,7 +16,7 @@ iapHost: "https://some"
 secretName: "some-name"
 clientId: "some-client"
 port: 8081
-refreshTimeSeconds: 3590
+refreshTimeSeconds: "3590"
 resources: {}
 
 nodeSelector: {}
