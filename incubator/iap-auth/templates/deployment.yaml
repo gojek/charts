@@ -66,7 +66,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-        volumes:
-          - name: sa_creds
-            secret:
-              secretName: {{ .Values.secretName }}
+      volumes:
+        - name: sa_creds
+          secret:
+            secretName: {{ .Values.secretName }}
