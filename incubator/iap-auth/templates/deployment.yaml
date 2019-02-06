@@ -24,7 +24,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
-            - name: sa_creds
+            - name: sa-creds
               mountPath: "/etc/iap_auth"
               readOnly: true
           env:
@@ -67,6 +67,6 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
-        - name: sa_creds
+        - name: sa-creds
           secret:
             secretName: {{ .Values.secretName }}
