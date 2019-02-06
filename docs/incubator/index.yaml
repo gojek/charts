@@ -3,37 +3,19 @@ entries:
   iap-auth:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-06T15:13:33.202183+05:30
+    created: 2019-02-06T15:19:08.002127+05:30
     description: A Helm chart for IAP Auth
-    digest: c74e0bd8332d8bec7d0560a576c70ce978590bb86230141478a08c9737d583f7
+    digest: cb58f8817afe50b562759c201b1361a25e5af9e933afa88850b67a42f8771245
     name: iap-auth
     urls:
     - iap-auth/iap-auth-0.1.2.tgz
     version: 0.1.2
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: 2019-02-06T15:13:33.201953+05:30
-    description: A Helm chart for IAP Auth
-    digest: af41734fc6617a4584657b4a055290e557f9bd36b335e47fc17a323ecf8cb481
-    name: iap-auth
-    urls:
-    - iap-auth/iap-auth-0.1.1.tgz
-    version: 0.1.1
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: 2019-02-06T15:13:33.201697+05:30
-    description: A Helm chart for IAP Auth
-    digest: 43163fecfff6f73ecea47242a1d29913973c64b5e613d90cd9d3f0f5d123e388
-    name: iap-auth
-    urls:
-    - iap-auth/iap-auth-0.1.0.tgz
-    version: 0.1.0
   rabbitmq:
   - appVersion: 3.6.12
-    created: 2019-02-06T15:13:33.203008+05:30
+    created: 2019-02-06T15:19:08.002977+05:30
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
-    digest: dc93bd95db6aaefcf57096746b71eb3ac3cc0291725a88269e58aa918849ce05
+    digest: 6ede10b4c3bc736df631160aca9b43e060ea211f14a33fd32f7f7ee0596ae7b5
     engine: gotpl
     home: https://www.rabbitmq.com
     icon: https://bitnami.com/assets/stacks/rabbitmq/img/rabbitmq-stack-220x234.png
@@ -50,7 +32,7 @@ entries:
     - rabbitmq/rabbitmq-0.6.9.tgz
     version: 0.6.9
   - appVersion: 3.6.12
-    created: 2019-02-06T15:13:33.202607+05:30
+    created: 2019-02-06T15:19:08.002568+05:30
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
     digest: 09ccc43904ed6321cc6fef8d3e01c5653729156bf8b37d95a524782d835d06c6
@@ -72,9 +54,9 @@ entries:
   stolon:
   - apiVersion: v1
     appVersion: 0.7.0
-    created: 2019-02-06T15:13:33.203409+05:30
+    created: 2019-02-06T15:19:08.003374+05:30
     description: Helm chart for creating PostgreSQL cluster using stolon
-    digest: 00f3098f4a61dc5528ac56aba283794c9c69f2e947a3c0cd17cf94e0a0b64df6
+    digest: 667e9a96838d648e7ea149ecbbc909c4c2b4844942f31dda6b1047f8f2232eb8
     engine: gotpl
     home: https://source.golabs.io/leap/helm-charts
     icon: https://github.com/sorintlab/stolon/blob/master/logos/stolon-color.png
@@ -89,11 +71,11 @@ entries:
     version: 0.4.0
   telegraf:
   - appVersion: "1.5"
-    created: 2019-02-06T15:13:33.203893+05:30
+    created: 2019-02-06T15:19:08.003848+05:30
     deprecated: true
     description: Telegraf is an agent written in Go for collecting, processing, aggregating,
       and writing metrics.
-    digest: 796bae9112100ad992136c4eb5d6c80fd3b15621084fd65fcdb8491d010857eb
+    digest: 4812fbec4d20b254ddc6075fbf268bfbd1c5db7da3e99c69c204d9dc1f160d91
     engine: gotpl
     home: https://www.influxdata.com/time-series-platform/telegraf/
     keywords:
@@ -110,9 +92,9 @@ entries:
     version: 0.3.3
   twemproxy:
   - apiVersion: v1
-    created: 2019-02-06T15:13:33.204131+05:30
+    created: 2019-02-06T15:19:08.004091+05:30
     description: A Helm chart for creating a twemproxy cluster
-    digest: 1925accd07326cf0432db444b84d56559f27c187500498304cee8621c48cdd9c
+    digest: 96a5ff4dc9ba7aa8861f65f32ce84182f5f13de76b8782eacbba728d627ccf20
     keywords:
     - redis
     - twemproxy
@@ -121,4 +103,4 @@ entries:
     urls:
     - twemproxy/twemproxy-0.1.0.tgz
     version: 0.1.0
-generated: 2019-02-06T15:13:33.201215+05:30
+generated: 2019-02-06T15:19:08.001678+05:30
