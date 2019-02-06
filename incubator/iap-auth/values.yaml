@@ -12,10 +12,11 @@ image:
 service:
   type: ClusterIP
   port: 80
+iapHost: "https://some"
 secretName: "some-name"
-client_id: "some-client"
+clientId: "some-client"
 port: 8081
-refresh_time_seconds: 3590
+refreshTimeSeconds: 3590
 resources: {}
 
 nodeSelector: {}

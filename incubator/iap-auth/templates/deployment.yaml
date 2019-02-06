@@ -29,15 +29,15 @@ spec:
               readOnly: true
           env:
             - name: REFRESH_TIME_SECONDS
-              value: {{ .Values.refresh_time_seconds }}
+              value: {{ .Values.refreshTimeSeconds }}
             - name: SERVICE_ACCOUNT_CREDENTIALS
               value: /etc/iap_auth/sa.json
             - name: IAP_HOST
-              value: {{ .Values.iap_host }}
+              value: {{ .Values.iapHost }}
             - name: CLIENT_ID
-              value: {{ .Values.client_id }}
+              value: {{ .Values.clientId }}
             - name: LOGGER_LEVEL
-              value: {{ .Values.log_level }}
+              value: {{ .Values.logLevel }}
             - name: PORT
               value: {{ .Values.port }}
           ports:
