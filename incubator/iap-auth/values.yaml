@@ -6,7 +6,7 @@ replicaCount: 2
 
 image:
   repository: gojektech/iap-auth
-  tag: 0.1.0-11436887bb6e238df0820f88d393afd3e461606a
+  tag: 0.1.0-b0315badc437a781036548b444b5a647280e717c
   pullPolicy: IfNotPresent
 
 service:
