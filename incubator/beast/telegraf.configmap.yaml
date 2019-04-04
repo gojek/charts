@@ -6,7 +6,7 @@ metadata:
 data:
   telegraf.conf: |-
     [[outputs.influxdb]]
-      urls = ["http://data-engineering.influxdb.golabs.io:8086"] # required
+      urls = ["<influxdbURL>"] # required
       database = "beast" # required
       retention_policy = ""
       write_consistency = "any"
