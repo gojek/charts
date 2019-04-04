@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegrafd
+  namespace: beast
+data:
+  telegraf.conf: |-
+    [[outputs.influxdb]]
+      urls = ["http://data-engineering.influxdb.golabs.io:8086"] # required
+      database = "beast" # required
+      retention_policy = ""
+      write_consistency = "any"
+      timeout = "5s"
+    [[inputs.statsd]]
+      service_address = ":8125"
+    [[inputs.jolokia]]
+      name_override = "beast_worker"
+      context = "/jolokia/"
+    [[inputs.jolokia.servers]]
+      name = "beast-consumer-car"
+      host = "127.0.0.1"
+      port = "7777"
+
+    [[inputs.jolokia.metrics]]
+      name = "heap_memory_usage"
+      mbean  = "java.lang:type=Memory"
+      attribute = "HeapMemoryUsage"
+
+    [[inputs.jolokia.metrics]]
+      name = "non_heap_memory_usage"
+      mbean  = "java.lang:type=Memory"
+      attribute = "NonHeapMemoryUsage"
+
+    [[inputs.jolokia.metrics]]
+      name = "thread_count"
+      mbean  = "java.lang:type=Threading"
+      attribute = "TotalStartedThreadCount,ThreadCount,DaemonThreadCount,PeakThreadCount"
+
+    [[inputs.jolokia.metrics]]
+      name = "class_count"
+      mbean  = "java.lang:type=ClassLoading"
+      attribute = "LoadedClassCount,UnloadedClassCount,TotalLoadedClassCount"
+
+    [[inputs.jolokia.metrics]]
+      name = "class_count"
+      mbean  = "java.lang:type=OperatingSystem"
+      attribute = "MaxFileDescriptorCount,ProcessCpuTime,AvailableProcessors,SystemCpuLoad,TotalSwapSpaceSize,OpenFileDescriptorCount,FreePhysicalMemorySize,CommittedVirtualMemorySize,ProcessCpuLoad,FreeSwapSpaceSize,TotalPhysicalMemorySize"
+
+    [[inputs.jolokia.metrics]]
+      name = "tenured_gen_memorypool"
+      mbean = "java.lang:name=Tenured Gen,type=MemoryPool"
+      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,UsageThresholdCount,UsageThreshold,PeakUsage"
+
+    [[inputs.jolokia.metrics]]
+      name = "par_eden_space_gen_memorypool"
+      mbean = "java.lang:name=Par Eden Space,type=MemoryPool"
+      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"
+
+    [[inputs.jolokia.metrics]]
+      name = "par_survivor_memorypool"
+      mbean = "java.lang:name=Par Survivor Space,type=MemoryPool"
+      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"
+
+    [[inputs.jolokia.metrics]]
+      name = "g1_survivor_memorypool"
+      mbean = "java.lang:name=G1 Survivor Space,type=MemoryPool"
+      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"
+
+    [[inputs.jolokia.metrics]]
+      name = "g1_eden_memorypool"
+      mbean = "java.lang:name=G1 Eden Space,type=MemoryPool"
+      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"
+
+    [[inputs.jolokia.metrics]]
+      name = "g1_oldgen_memorypool"
+      mbean = "java.lang:name=G1 Old Gen,type=MemoryPool"
+      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,UsageThresholdCount,UsageThreshold,PeakUsage"
+
+    [[inputs.jolokia.metrics]]
+      name = "garbage_collection_parnew"
+      mbean  = "java.lang:name=ParNew,type=GarbageCollector"
+      attribute = "ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"
+
+    [[inputs.jolokia.metrics]]
+      name = "garbage_collection_marksweep"
+      mbean  = "java.lang:name=MarkSweepCompact,type=GarbageCollector"
+      attribute = "ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"
+
+    [[inputs.jolokia.metrics]]
+      name = "uptime"
+      mbean  = "java.lang:type=Runtime"
+      attribute = "Uptime"
+
+    [[inputs.jolokia.metrics]]
+      name = "garbage_collection_g1_young"
+      mbean  = "java.lang:name=G1 Young Generation,type=GarbageCollector"
+      attribute = "ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"
+
+    [[inputs.jolokia.metrics]]
+      name = "garbage_collection_g1_old"
+      mbean  = "java.lang:name=G1 Old Generation,type=GarbageCollector"
+      attribute = "ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"

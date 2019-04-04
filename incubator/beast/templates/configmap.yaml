@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "beast.fullname" . }}
+  namespace: {{ .Values.namespace }}
+data:
+  BQ_DATASET_NAME: "{{ .Values.configArgs.bqDatasetName }}"
+  BQ_TABLE_NAME: "{{ .Values.configArgs.bqTableName }}"
+  BQ_WORKER_POOL_SIZE: "{{ .Values.configArgs.bqWorkerPoolSize }}"
+  GOOGLE_CREDENTIALS: "{{ .Values.configArgs.googleCredentials }}"
+  KAFKA_CONSUMER_BOOTSTRAP_SERVERS: "{{ .Values.configArgs.kafkaConsumerBootstrapServers }}"
+  KAFKA_CONSUMER_GROUP_ID: "{{ include "beast.fullname" . }}"
+  KAFKA_CONSUMER_KEY_DESERIALIZER: org.apache.kafka.common.serialization.ByteArrayDeserializer
+  KAFKA_CONSUMER_MAX_POLL_RECORDS: "{{ .Values.configArgs.kafkaConsumerMaxPollRecords }}"
+  KAFKA_CONSUMER_METADATA_MAX_AGE_MS: "{{ .Values.configArgs.kafkaConsumerMetadataMaxAgeMs }}"
+  KAFKA_CONSUMER_SESSION_TIMEOUT_MS: "{{ .Values.configArgs.kafkaConsumerSessionTimeoutMs }}"
+  KAFKA_CONSUMER_VALUE_DESERIALIZER: "org.apache.kafka.common.serialization.ByteArrayDeserializer"
+  KAFKA_TOPIC: "{{ .Values.configArgs.kafkaTopic }}"
+  LOG_LEVEL: "{{ .Values.configArgs.logLevel }}"
+  PROTO_COLUMN_MAPPING: '{{ .Values.configArgs.protoColumnMapping }}'
+  PROTO_SCHEMA: "{{ .Values.configArgs.protoSchema }}"
+  READ_QUEUE_CAPACITY: "{{ .Values.configArgs.readQueueCapacity }}"
+  COMMIT_QUEUE_CAPACITY: "{{ .Values.configArgs.commitQueueCapacity }}"
+  STATSD_ENABLED: "true"
+  STATSD_HOST: "localhost"
+  STATSD_PORT: "8125"
+  STATSD_PREFIX: "{{ .Values.configArgs.statsdPrefix }}"
+  STENCIL_URL: "{{ .Values.configArgs.stencilURL }}"
+  SENTRY_DSN: "{{ .Values.configArgs.sentryDsn | default " " }}"
+  SENTRY_SAMPLE_RATE: {{ .Values.configArgs.sentrySampleRate | default 1.0 | quote }}
+  OFFSET_ACK_TIMEOUT: {{ .Values.configArgs.offsetAckTimeout | default 60000 | quote }}
+  BQ_WORKER_POLL_TIMEOUT_MS: {{ .Values.configArgs.bqWorkerPollTimeout | default 5000 | quote }}
+  {{ if .Values.configArgs.enableAutoSchemaUpdate }}
+  PROTO_COLUMN_MAPPING_URL: {{ .Values.configArgs.protoColumnMappingURL | default nil }}
+  UPDATE_TABLE_SCHEMA_URL: {{ .Values.configArgs.updateTableSchemaURL }}
+  {{ end }}
+  ENABLE_AUTO_SCHEMA_UPDATE: "{{ .Values.configArgs.enableAutoSchemaUpdate | default false }}"

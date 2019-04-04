@@ -1,0 +1,55 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "beast.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "beast.name" . }}
+    helm.sh/chart: {{ include "beast.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "beast.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "beast.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ["-cp",  "/opt/beast/beast.jar:/opt/beast/jolokia-jvm-agent.jar", "-javaagent:jolokia-jvm-agent.jar=port=7777,host=0.0.0.0", "com.gojek.beast.launch.Main"]
+          command: ["java"]
+          envFrom:
+          - configMapRef:
+              name: {{ include "beast.name" . }}
+          env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          volumeMounts:
+          - mountPath: /root
+            name: google-credentials
+        - name: telegrafd
+          imagePullPolicy: IfNotPresent
+          image: telegraf:1.7.4-alpine
+          volumeMounts:
+            - name: telegraf-conf
+              mountPath: /etc/telegraf/
+      volumes:
+      - name: google-credentials
+        secret:
+          secretName: {{ .Values.configArgs.secretName }}
+      - name: telegraf-conf
+        configMap:
+          name: telegrafd
