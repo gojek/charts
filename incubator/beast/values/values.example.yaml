@@ -1,0 +1,29 @@
+image:
+  repository: gojektech/beast
+  tag: f29f085b57b10de41b094004916b5129b89ab19a
+  pullPolicy: Always
+
+nameOverride: "beast-deployment"
+fullnameOverride: "beast-deployment"
+
+replicaCount: "1"
+
+namespace: development
+
+configArgs:
+  bqDatasetName: "beast"
+  bqTableName: "beast-deployment"
+  bqWorkerPoolSize: "40"
+  googleCredentials: "service-account.json"
+  kafkaConsumerBootstrapServers: "localhost:9092"
+  kafkaConsumerMaxPollRecords: "100"
+  kafkaConsumerMetadataMaxAgeMs: "500"
+  kafkaConsumerSessionTimeoutMs: "10000"
+  logLevel: "INFO"
+  readQueueCapacity: "500"
+  commitQueueCapacity: "800"
+  statsdPrefix: "beast"
+  sentrySampleRate: "1.0"
+  enableAutoSchemaUpdate: false
+  secretName: "bq-service-account-secret"
+  
