@@ -10,7 +10,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.service.port }}
+    - port: 18000
       targetPort: 18000
       protocol: TCP
   selector:
