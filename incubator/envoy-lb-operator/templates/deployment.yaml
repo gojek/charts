@@ -25,16 +25,16 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-              containerPort: {{ .Values.port }}
+            - containerPort: 18000
               protocol: TCP
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.port }}
+              port:  18000
             initialDelaySeconds: 2
             periodSeconds: 10
           readinessProbe:
             tcpSocket:
-              port: {{ .Values.port }}
+              port: 18000
             initialDelaySeconds: 10
             periodSeconds: 20
           resources:
