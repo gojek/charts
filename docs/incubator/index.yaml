@@ -3,9 +3,9 @@ entries:
   beast:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T10:58:36.408366+05:30
+    created: 2019-05-17T11:12:56.279139+05:30
     description: A Helm chart for Kubernetes
-    digest: a7d362154cd8be19aa8dbce3942fb9fe4b1912d6c3c66ac9da1487cc1ac1be7a
+    digest: cc46a75ea3ca97fcc2966a41200555c831b4d79cb6158562124917eff1eb5f8e
     name: beast
     urls:
     - beast/beast-0.1.0.tgz
@@ -13,7 +13,16 @@ entries:
   envoy-lb-operator:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T10:58:36.40917+05:30
+    created: 2019-05-17T11:12:56.279957+05:30
+    description: A Helm chart for Envoy LB Operator
+    digest: aa276dfa487dee28945df4ef7ef25c564634075c4db9e809e43e6248c9fd64a7
+    name: envoy-lb-operator
+    urls:
+    - envoy-lb-operator/envoy-lb-operator-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-05-17T11:12:56.279726+05:30
     description: A Helm chart for Envoy LB Operator
     digest: b4dca5f274683ec64ac9e424dbe820561f80be5b9ed86320f185560c2830a2df
     name: envoy-lb-operator
@@ -22,7 +31,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T10:58:36.408915+05:30
+    created: 2019-05-17T11:12:56.279425+05:30
     description: A Helm chart for Envoy LB Operator
     digest: 8b67bf12510d13690e8816f2df322bec200d622f6e589dd2aa735db5cbff9f7c
     name: envoy-lb-operator
@@ -32,19 +41,19 @@ entries:
   iap-auth:
   - apiVersion: v1OB
     appVersion: "1.0"
-    created: 2019-05-17T10:58:36.409423+05:30
+    created: 2019-05-17T11:12:56.280179+05:30
     description: A Helm chart for IAP Auth
-    digest: 98b1630b5f280b2efadad3d7d13f5ff4919165d9001e4bb69bf6c9140275e7c9
+    digest: fe1a4b299fe4de2581d1872945059485695657d5ce216d69830776e2b634836c
     name: iap-auth
     urls:
     - iap-auth/iap-auth-0.1.16.tgz
     version: 0.1.16
   rabbitmq:
   - appVersion: 3.6.12
-    created: 2019-05-17T10:58:36.410787+05:30
+    created: 2019-05-17T11:12:56.281064+05:30
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
-    digest: 327d733e7d052b2a038137d2b88bb1099947129f8c9c7a1b7e71bf1f9f001a9c
+    digest: f479610428b2bb15d22ada57aed51a0c98eca764526287669522fd105a5c2a4d
     engine: gotpl
     home: https://www.rabbitmq.com
     icon: https://bitnami.com/assets/stacks/rabbitmq/img/rabbitmq-stack-220x234.png
@@ -61,7 +70,7 @@ entries:
     - rabbitmq/rabbitmq-0.6.9.tgz
     version: 0.6.9
   - appVersion: 3.6.12
-    created: 2019-05-17T10:58:36.410352+05:30
+    created: 2019-05-17T11:12:56.280634+05:30
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
     digest: 09ccc43904ed6321cc6fef8d3e01c5653729156bf8b37d95a524782d835d06c6
@@ -83,9 +92,9 @@ entries:
   stolon:
   - apiVersion: v1
     appVersion: 0.7.0
-    created: 2019-05-17T10:58:36.411224+05:30
+    created: 2019-05-17T11:12:56.281486+05:30
     description: Helm chart for creating PostgreSQL cluster using stolon
-    digest: 0355d918103aff04729741b53527f84df566e05e6c659fc8fc415c07fa0c1521
+    digest: 4d499fa3e55208449bb06d7997f1b80b40b9ce77ac6eb54469e0cd3d0ec87914
     engine: gotpl
     home: https://source.golabs.io/leap/helm-charts
     icon: https://github.com/sorintlab/stolon/blob/master/logos/stolon-color.png
@@ -100,11 +109,11 @@ entries:
     version: 0.4.0
   telegraf:
   - appVersion: "1.5"
-    created: 2019-05-17T10:58:36.411782+05:30
+    created: 2019-05-17T11:12:56.282675+05:30
     deprecated: true
     description: Telegraf is an agent written in Go for collecting, processing, aggregating,
       and writing metrics.
-    digest: 2db285c8041fef20e7788d42d5897c55af955e1198f87efa3d5c2ca212a9d49b
+    digest: d73340fd84191a525d6c93b83354ae2bafbb98c4527520fc237620055295e686
     engine: gotpl
     home: https://www.influxdata.com/time-series-platform/telegraf/
     keywords:
@@ -121,9 +130,9 @@ entries:
     version: 0.3.3
   twemproxy:
   - apiVersion: v1
-    created: 2019-05-17T10:58:36.412149+05:30
+    created: 2019-05-17T11:12:56.282973+05:30
     description: A Helm chart for creating a twemproxy cluster
-    digest: aa52cf2f805f68c4a6f3fe4e92b6f6d53eed3c7e3a864314477b47a21eb07c6e
+    digest: 60e08c916f792b2aa09f20a3076d45e74275f6c11cb83df9a654ed61d1f4c8ef
     keywords:
     - redis
     - twemproxy
@@ -132,4 +141,4 @@ entries:
     urls:
     - twemproxy/twemproxy-0.1.0.tgz
     version: 0.1.0
-generated: 2019-05-17T10:58:36.407813+05:30
+generated: 2019-05-17T11:12:56.278604+05:30
