@@ -3,9 +3,9 @@ entries:
   beast:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-15T15:32:51.500846+05:30
+    created: 2019-05-17T10:58:36.408366+05:30
     description: A Helm chart for Kubernetes
-    digest: 048365107b7c6ba7ef79ac326deae445c0306709294e89db21f1a227cda9b5fc
+    digest: a7d362154cd8be19aa8dbce3942fb9fe4b1912d6c3c66ac9da1487cc1ac1be7a
     name: beast
     urls:
     - beast/beast-0.1.0.tgz
@@ -13,7 +13,16 @@ entries:
   envoy-lb-operator:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-15T15:32:51.501078+05:30
+    created: 2019-05-17T10:58:36.40917+05:30
+    description: A Helm chart for Envoy LB Operator
+    digest: b4dca5f274683ec64ac9e424dbe820561f80be5b9ed86320f185560c2830a2df
+    name: envoy-lb-operator
+    urls:
+    - envoy-lb-operator/envoy-lb-operator-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-05-17T10:58:36.408915+05:30
     description: A Helm chart for Envoy LB Operator
     digest: 8b67bf12510d13690e8816f2df322bec200d622f6e589dd2aa735db5cbff9f7c
     name: envoy-lb-operator
@@ -23,19 +32,19 @@ entries:
   iap-auth:
   - apiVersion: v1OB
     appVersion: "1.0"
-    created: 2019-05-15T15:32:51.501443+05:30
+    created: 2019-05-17T10:58:36.409423+05:30
     description: A Helm chart for IAP Auth
-    digest: c5e4c0d3efe45dda29d5fc272884b1b9c98eaf860ff61fc109e7190e3ce2fffc
+    digest: 98b1630b5f280b2efadad3d7d13f5ff4919165d9001e4bb69bf6c9140275e7c9
     name: iap-auth
     urls:
     - iap-auth/iap-auth-0.1.16.tgz
     version: 0.1.16
   rabbitmq:
   - appVersion: 3.6.12
-    created: 2019-05-15T15:32:51.50488+05:30
+    created: 2019-05-17T10:58:36.410787+05:30
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
-    digest: 78e48c219b66fdb76a0b788c8d2baafd80889d8539282f6942bac527e6330370
+    digest: 327d733e7d052b2a038137d2b88bb1099947129f8c9c7a1b7e71bf1f9f001a9c
     engine: gotpl
     home: https://www.rabbitmq.com
     icon: https://bitnami.com/assets/stacks/rabbitmq/img/rabbitmq-stack-220x234.png
@@ -52,7 +61,7 @@ entries:
     - rabbitmq/rabbitmq-0.6.9.tgz
     version: 0.6.9
   - appVersion: 3.6.12
-    created: 2019-05-15T15:32:51.504372+05:30
+    created: 2019-05-17T10:58:36.410352+05:30
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
     digest: 09ccc43904ed6321cc6fef8d3e01c5653729156bf8b37d95a524782d835d06c6
@@ -74,9 +83,9 @@ entries:
   stolon:
   - apiVersion: v1
     appVersion: 0.7.0
-    created: 2019-05-15T15:32:51.505291+05:30
+    created: 2019-05-17T10:58:36.411224+05:30
     description: Helm chart for creating PostgreSQL cluster using stolon
-    digest: 3bc1a278bcf93aa9614b43d1cb9e67c767c19a998708925c4b6d3be4ef00ef12
+    digest: 0355d918103aff04729741b53527f84df566e05e6c659fc8fc415c07fa0c1521
     engine: gotpl
     home: https://source.golabs.io/leap/helm-charts
     icon: https://github.com/sorintlab/stolon/blob/master/logos/stolon-color.png
@@ -91,11 +100,11 @@ entries:
     version: 0.4.0
   telegraf:
   - appVersion: "1.5"
-    created: 2019-05-15T15:32:51.505789+05:30
+    created: 2019-05-17T10:58:36.411782+05:30
     deprecated: true
     description: Telegraf is an agent written in Go for collecting, processing, aggregating,
       and writing metrics.
-    digest: fdfab90d543fe70ad0438a9e9377eaf7f230558aa9e2fb3e8b2e48149d6b37c5
+    digest: 2db285c8041fef20e7788d42d5897c55af955e1198f87efa3d5c2ca212a9d49b
     engine: gotpl
     home: https://www.influxdata.com/time-series-platform/telegraf/
     keywords:
@@ -112,9 +121,9 @@ entries:
     version: 0.3.3
   twemproxy:
   - apiVersion: v1
-    created: 2019-05-15T15:32:51.506042+05:30
+    created: 2019-05-17T10:58:36.412149+05:30
     description: A Helm chart for creating a twemproxy cluster
-    digest: 530256935aa9b011b309c33609535ac160ef7bac6c8978661d0396e6cdbe9fca
+    digest: aa52cf2f805f68c4a6f3fe4e92b6f6d53eed3c7e3a864314477b47a21eb07c6e
     keywords:
     - redis
     - twemproxy
@@ -123,4 +132,4 @@ entries:
     urls:
     - twemproxy/twemproxy-0.1.0.tgz
     version: 0.1.0
-generated: 2019-05-15T15:32:51.500338+05:30
+generated: 2019-05-17T10:58:36.407813+05:30
