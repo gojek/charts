@@ -3,9 +3,9 @@ entries:
   beast:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T15:24:56.134815+05:30
+    created: 2019-05-21T09:45:25.8833+05:30
     description: A Helm chart for Kubernetes
-    digest: 9c7fd101db9819c1b2df06ca679108ff007391445314ecc1978cce6f84151caa
+    digest: 932d25b87c0b9ca38b316dc174a0a9530e23b11be34745995ba934e6f61ce5eb
     name: beast
     urls:
     - beast/beast-0.1.0.tgz
@@ -13,7 +13,16 @@ entries:
   envoy-lb-operator:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T15:24:56.136281+05:30
+    created: 2019-05-21T09:45:25.888144+05:30
+    description: A Helm chart for Envoy LB Operator
+    digest: 838310911cfa3174bd1b9bcd432fa502e439cc5c287aa808d0a939eef3338b1b
+    name: envoy-lb-operator
+    urls:
+    - envoy-lb-operator/envoy-lb-operator-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-05-21T09:45:25.887843+05:30
     description: A Helm chart for Envoy LB Operator
     digest: 00e4152fd0e5c660b246ddc92b6f21ee487e8fac21af7d437e60ef07416427f4
     name: envoy-lb-operator
@@ -22,7 +31,7 @@ entries:
     version: 0.1.5
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T15:24:56.136038+05:30
+    created: 2019-05-21T09:45:25.887196+05:30
     description: A Helm chart for Envoy LB Operator
     digest: 6b83a63df146befd8d556b6e138af4e702d48e7bbe4d1c7dc61b7e789370c622
     name: envoy-lb-operator
@@ -31,7 +40,7 @@ entries:
     version: 0.1.4
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T15:24:56.135774+05:30
+    created: 2019-05-21T09:45:25.886542+05:30
     description: A Helm chart for Envoy LB Operator
     digest: 4cbfd881b0feda0f5c6aa6bfd50e61f733624a5697ab190d7ece5c4c122c0751
     name: envoy-lb-operator
@@ -40,7 +49,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T15:24:56.135531+05:30
+    created: 2019-05-21T09:45:25.885684+05:30
     description: A Helm chart for Envoy LB Operator
     digest: aa276dfa487dee28945df4ef7ef25c564634075c4db9e809e43e6248c9fd64a7
     name: envoy-lb-operator
@@ -49,7 +58,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T15:24:56.13527+05:30
+    created: 2019-05-21T09:45:25.884825+05:30
     description: A Helm chart for Envoy LB Operator
     digest: b4dca5f274683ec64ac9e424dbe820561f80be5b9ed86320f185560c2830a2df
     name: envoy-lb-operator
@@ -58,7 +67,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-17T15:24:56.135044+05:30
+    created: 2019-05-21T09:45:25.884079+05:30
     description: A Helm chart for Envoy LB Operator
     digest: 8b67bf12510d13690e8816f2df322bec200d622f6e589dd2aa735db5cbff9f7c
     name: envoy-lb-operator
@@ -68,19 +77,19 @@ entries:
   iap-auth:
   - apiVersion: v1OB
     appVersion: "1.0"
-    created: 2019-05-17T15:24:56.136546+05:30
+    created: 2019-05-21T09:45:25.888432+05:30
     description: A Helm chart for IAP Auth
-    digest: 83dd7bd2b54a8583b0ff55536dd102fc8729dfb6cc35a1f3e82dda5f47b5c32c
+    digest: ca890438703d53636969e7579063cd8a55aed852ffeffc5e6682e0a26a56ab74
     name: iap-auth
     urls:
     - iap-auth/iap-auth-0.1.16.tgz
     version: 0.1.16
   rabbitmq:
   - appVersion: 3.6.12
-    created: 2019-05-17T15:24:56.137407+05:30
+    created: 2019-05-21T09:45:25.890262+05:30
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
-    digest: 0759526572312860e353055e9c2ebedfcadb5e27a6d10b11ba0ecfff101fd182
+    digest: 3ded655e9c3e4cc551815e6d18cf51be73aa8ae28ee5eed0d6ca4deca3d26424
     engine: gotpl
     home: https://www.rabbitmq.com
     icon: https://bitnami.com/assets/stacks/rabbitmq/img/rabbitmq-stack-220x234.png
@@ -97,7 +106,7 @@ entries:
     - rabbitmq/rabbitmq-0.6.9.tgz
     version: 0.6.9
   - appVersion: 3.6.12
-    created: 2019-05-17T15:24:56.136981+05:30
+    created: 2019-05-21T09:45:25.889723+05:30
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
     digest: 09ccc43904ed6321cc6fef8d3e01c5653729156bf8b37d95a524782d835d06c6
@@ -119,9 +128,9 @@ entries:
   stolon:
   - apiVersion: v1
     appVersion: 0.7.0
-    created: 2019-05-17T15:24:56.137812+05:30
+    created: 2019-05-21T09:45:25.890708+05:30
     description: Helm chart for creating PostgreSQL cluster using stolon
-    digest: 2e85152832751b9ec6e536749cf481090a6eb5d38a3e659b812053d5a89274ba
+    digest: e7fbe76da9c242adddbe92790974fa00d4c8c8d648681217be814d600b408a0c
     engine: gotpl
     home: https://source.golabs.io/leap/helm-charts
     icon: https://github.com/sorintlab/stolon/blob/master/logos/stolon-color.png
@@ -136,11 +145,11 @@ entries:
     version: 0.4.0
   telegraf:
   - appVersion: "1.5"
-    created: 2019-05-17T15:24:56.138347+05:30
+    created: 2019-05-21T09:45:25.891236+05:30
     deprecated: true
     description: Telegraf is an agent written in Go for collecting, processing, aggregating,
       and writing metrics.
-    digest: 872a9d47c4ed0c615e312976ca8fe38b479f87881fff651e291d30a4707811bb
+    digest: ef2ca632bfc860815ddc8ce239210e79d54babb3a614046077707a0788805951
     engine: gotpl
     home: https://www.influxdata.com/time-series-platform/telegraf/
     keywords:
@@ -157,9 +166,9 @@ entries:
     version: 0.3.3
   twemproxy:
   - apiVersion: v1
-    created: 2019-05-17T15:24:56.138613+05:30
+    created: 2019-05-21T09:45:25.891508+05:30
     description: A Helm chart for creating a twemproxy cluster
-    digest: 5cadc959b6e4e3d4b9ef7d37a83e4c14dd2d91dd4010ee28cbd883ee2c92ec33
+    digest: 25c5cd04a0895579dcbe60c38ad031a29b7908f09b664efd785d3527d8b2740d
     keywords:
     - redis
     - twemproxy
@@ -168,4 +177,4 @@ entries:
     urls:
     - twemproxy/twemproxy-0.1.0.tgz
     version: 0.1.0
-generated: 2019-05-17T15:24:56.134252+05:30
+generated: 2019-05-21T09:45:25.882748+05:30
