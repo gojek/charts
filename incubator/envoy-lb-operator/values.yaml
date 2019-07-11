@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: gojektech/envoy-lb-operator
-  tag: 0.1.0-15cfbdcca67eca2193a6feb63565415eebd4916e
+  tag: 0.1.0-38a3de358a5803f9097f583b88a4b020721441de
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -25,3 +25,26 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+envoy:
+  cluster:
+    connect_timeout_ms: 1000
+    circuit_breaker:
+      max_connections: 1024
+      max_requests: 50000
+      max_pending_requests: 50000
+      max_retries: 50000
+    outlier_detection:
+      base_ejection_time_in_seconds: 30
+      ejection_sweep_interval_in_seconds: 10
+      consecutive_5xx: 10000
+      consecutive_gateway_failure: 5
+      enforcing_consecutive_5xx: 0
+      enforcing_consecutive_gateway_failure: 100
+      max_ejection_percent: 50
+  vhost:
+    retry:
+      retry_on: "connect-failure"
+      retry_predicate: "envoy.retry_host_predicates.previous_hosts"
+      num_retries: 3
+      host_selection_max_retry_attempts: 3

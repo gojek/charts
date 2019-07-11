@@ -37,6 +37,10 @@ spec:
               port: 18000
             initialDelaySeconds: 10
             periodSeconds: 20
+          volumeMounts:
+            - name: envoy-lb-operator-conf
+              mountPath: /opt/envoy-lb-operator/application.yml
+              subPath: application.yml
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -51,3 +55,9 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+
+      volumes:
+        - name: envoy-lb-operator-conf
+          configMap:
+            name: {{ include "envoy-lb-operator.name" . }}-config
+
