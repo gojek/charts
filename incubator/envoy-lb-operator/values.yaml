@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: gojektech/envoy-lb-operator
-  tag: 0.1.0-aad3ff1a532b49265f9b3b1a2741f4e605747cae
+  tag: 0.1.0-b7496572ec945ed8489fe25552702fdb1bdd2d6f
   pullPolicy: IfNotPresent
 
 nameOverride: ""
