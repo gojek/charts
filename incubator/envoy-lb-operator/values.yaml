@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: gojektech/envoy-lb-operator
-  tag: 0.1.0-b7496572ec945ed8489fe25552702fdb1bdd2d6f
+  tag: 0.1.0-e9e777038c8b3739bbfd42f0d1212f7708416920
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -26,25 +26,34 @@ tolerations: []
 
 affinity: {}
 
-envoy:
-  cluster:
-    connect_timeout_ms: 1000
-    circuit_breaker:
-      max_connections: 1024
-      max_requests: 50000
-      max_pending_requests: 50000
-      max_retries: 50000
-    outlier_detection:
-      base_ejection_time_in_seconds: 30
-      ejection_sweep_interval_in_seconds: 10
-      consecutive_5xx: 10000
-      consecutive_gateway_failure: 5
-      enforcing_consecutive_5xx: 0
-      enforcing_consecutive_gateway_failure: 100
-      max_ejection_percent: 50
-  vhost:
-    retry:
-      retry_on: "connect-failure"
-      retry_predicate: "envoy.retry_host_predicates.previous_hosts"
-      num_retries: 3
-      host_selection_max_retry_attempts: 3
+appConfig:
+  envoy:
+    cluster:
+      connect_timeout_ms: 1000
+      circuit_breaker:
+        max_connections: 1024
+        max_requests: 50000
+        max_pending_requests: 50000
+        max_retries: 50000
+      outlier_detection:
+        base_ejection_time_in_seconds: 30
+        ejection_sweep_interval_in_seconds: 10
+        consecutive_5xx: 10000
+        consecutive_gateway_failure: 5
+        enforcing_consecutive_5xx: 0
+        enforcing_consecutive_gateway_failure: 100
+        max_ejection_percent: 50
+    vhost:
+      retry:
+        retry_on: "connect-failure"
+        retry_predicate: "envoy.retry_host_predicates.previous_hosts"
+        num_retries: 3
+        host_selection_max_retry_attempts: 3
+  operator:
+    refresh_interval_in_s: 10
+    envoy_discovery_mapping:
+      - envoy_id: "id"
+        upstream_endpoint_label: "label=val"
+        namespace: "namespace"
+    log:
+      level: info
