@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "9090"
+      namespace: {{ .Values.namespace }}
+    spec:
+      containers:
+      - name: kafqa
+        imagePullPolicy: Always
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        command: ["/bin/bash","-c","go get github.com/gojekfarm/kafqa && kafqa && ls /"]
+        env:
+          - name: KAFKA_CLUSTER
+            value: {{ .Values.kafka.cluster | quote }}
+          - name: PRODUCER_KAFKA_BROKERS
+            value: {{ .Values.producer.kafkaBrokers | quote }}
+          - name: PRODUCER_TOTAL_MESSAGES
+            value: {{ .Values.producer.totalMessages | quote }}
+          - name: PRODUCER_CONCURRENCY
+            value: {{ .Values.producer.concurrency | quote }}
+          - name: PRODUCER_WORKER_DELAY_MS
+            value: {{ .Values.producer.workerDelayMs | quote }}
+          - name: PRODUCER_ENABLED
+            value: {{ .Values.producer.enabled | quote }}
+          - name: APP_ENVIRONMENT
+            value: {{ .Values.environment }}
+          - name: APP_DURATION_MS
+            value: {{ .Values.appDurationMs | quote }}
+          - name:  KAFKA_TOPIC
+            value: {{ .Values.kafka.topic | quote }}
+          - name: CONSUMER_ENABLED
+            value: {{ .Values.consumer.enabled | quote }}
+          - name: CONSUMER_CONCURRENCY
+            value: {{ .Values.consumer.concurrency | quote }}
+          - name: CONSUMER_KAFKA_BROKERS
+            value: {{ .Values.consumer.kafkaBrokers | quote }}
+          - name: CONSUMER_GROUP_ID
+            value: {{ .Values.consumer.groupId }}
+          - name: CONSUMER_POLL_TIMEOUT_MS
+            value: {{ .Values.consumer.pollTimeoutMs | quote }}
+          - name: CONSUMER_ENABLE_AUTO_COMMIT
+            value: {{ .Values.consumer.enableAutoCommit | quote }}
+          - name: PROMETHEUS_ENABLED
+            value: {{ .Values.prometheus.enabled | quote }}
+          - name: PROMETHEUS_PORT
+            value: {{ .Values.prometheus.port | quote }}
+          - name: STATSD_ENABLED
+            value: {{ .Values.stats.enabled | quote }}
+          - name: STATSD_HOST
+            value: {{ .Values.stats.host | quote }}
+          - name: STATSD_PORT
+            value: {{ .Values.stats.port | quote }}
+          - name: LIBRD_ENABLED
+            value: {{ .Values.librd.enabled | quote }}
+          - name: LIBRD_QUEUE_BUFFERING_MAX_MESSAGE
+            value: {{ .Values.librd.queueMaxSize | quote }}
+          - name: LIBRD_BATCH_NUM_MESSAGES
+            value: {{ .Values.librd.batchSize | quote }}
+          - name: LIBRD_QUEUED_MIN_MESSAGES
+            value: {{ .Values.librd.queuedMinMessages | quote }}
+          - name: LIBRD_REQUEST_REQUIRED_ACKS
+            value: {{ .Values.acks | quote }}
+          - name: LIBRD_STATISTICS_INTERVAL_MS
+            value: {{ .Values.librd.statsIntervalMs | quote }}
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: DEPLOYMENT
+            value: {{ include "kafqa.fullname" . }}
+
+        resources: 
+{{ toYaml .Values.resources.kafqa | indent 12 }}
+
+
+      - name: telegrafd
+        image: {{ .Values.telegraf.image.repository }}:{{ .Values.telegraf.image.tag }}
+        volumeMounts:
+        - name: telegraf-conf
+          mountPath: /etc/telegraf
+        resources: 
+{{ toYaml .Values.resources.telegraf | indent 12 }}
+         
+      volumes:
+      - name: telegraf-conf
+        configMap:
+          name: {{ .Release.Name }}-telegrafd
