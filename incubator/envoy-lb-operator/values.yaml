@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: gojektech/envoy-lb-operator
-  tag: 0.1.0-e9e777038c8b3739bbfd42f0d1212f7708416920
+  tag: 0.1.0-18eb1aea6598bdb978308fa2d8169834fb2c073a
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -51,9 +51,11 @@ appConfig:
         host_selection_max_retry_attempts: 3
   operator:
     refresh_interval_in_s: 10
+    auto_refresh_conn: false
     envoy_discovery_mapping:
       - envoy_id: "id"
-        upstream_endpoint_label: "label=val"
+        upstream_label: "label1=val1"
+        endpoint_label: "label2=val2"
         namespace: "namespace"
     log:
       level: info
