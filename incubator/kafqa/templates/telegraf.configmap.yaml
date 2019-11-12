@@ -1,0 +1,46 @@
+apiVersion: v1
+data:
+  telegraf.conf: |-
+    [global_tags]
+      cluster_name = {{ .Values.environment | quote }}
+    [agent]
+      collection_jitter = "0s"
+      debug = false
+      flush_interval = "10s"
+      flush_jitter = "0s"
+      interval = "10s"
+      logfile = ""
+      omit_hostname = false
+      precision = ""
+      quiet = false
+      round_interval = true
+      hostname = "$HOSTNAME"
+      # below config are same because of Prometheus time miss match if there are request pending in buffer for next flush
+      metric_batch_size = 5000
+      metric_buffer_limit = 5000
+
+    [[inputs.internal]]
+      collect_memstats = false
+
+    [[inputs.statsd]]
+      allowed_pending_messages = 100000
+      delete_counters = false
+      delete_sets = false
+      delete_timings = false
+      metric_separator = "."
+      parse_data_dog_tags = true
+      percentile_limit = 1000
+      percentiles = [
+        50,
+        95,
+        99
+      ]
+      service_address = ":8125"
+
+    [[outputs.prometheus_remote_write]]
+      url = {{ .Values.prometheus.url | quote }}
+      bearer_token = {{ .Values.prometheus.token | quote }}
+
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telegrafd

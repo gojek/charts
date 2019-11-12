@@ -1,0 +1,84 @@
+# Default values for kafqa.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+environment: "integration"
+appDurationMs: "5000000000"
+acks: "1"
+appPort: 8081
+namespace: "hermes"
+
+kafka:
+  cluster: "test"
+  topic: "kafqa-test-topic"
+
+producer:
+  enabled: true
+  kafkaBrokers: "localhost:9092"
+  totalMessages: -1
+  concurrency: 1
+  workerDelayMs: 50
+
+consumer:
+  enabled: true
+  kafkaBrokers: "localhost:9092"
+  groupId: "consumer-test-001"
+  concurrency: 1
+  pollTimeoutMs: 300
+  enableAutoCommit: true
+
+librd:
+  enabled: false
+  queueMaxSize: 10000
+  batchSize: 10000
+  queuedMinMessages: 30000
+  statsIntervalMs: 500
+
+prometheus:
+  enabled: true
+  port: 9090
+  url: "https://localhost:8080/v1/prom/metrics"
+  token: "test"
+
+stats:
+  enabled: true
+  host: "localhost"
+  port: 8125
+
+telegraf:
+  image:
+    repository: telegraf
+    tag: latest
+
+image:
+  repository: gojektech/kafqa
+  tag: latest
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+resources:
+  kafqa: 
+    limits:
+      cpu: 512m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  telegraf: 
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+  
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
