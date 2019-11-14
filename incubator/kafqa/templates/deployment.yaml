@@ -43,6 +43,8 @@ spec:
             value: {{ .Values.producer.workerDelayMs | quote }}
           - name: PRODUCER_ENABLED
             value: {{ .Values.producer.enabled | quote }}
+          - name: PRODUCER_ACKS
+            value: {{ .Values.acks | quote }}
           - name: APP_ENVIRONMENT
             value: {{ .Values.environment }}
           - name: APP_DURATION_MS
