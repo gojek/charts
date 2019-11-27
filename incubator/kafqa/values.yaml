@@ -3,7 +3,8 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-environment: "integration"
+# Use "development" to get debug logs
+environment: "production"
 appDurationMs: "5000000000"
 acks: "1"
 appPort: 8081
@@ -50,6 +51,13 @@ telegraf:
   image:
     repository: telegraf
     tag: latest
+
+# Agent is sidecar, and it pushes data collector which could be remote
+opentracing:
+    collectorHost: localhost
+    collectorPort: 80
+    jaegerDisabled: false
+    jaegerReportLogSpans: true
 
 image:
   repository: gojektech/kafqa
