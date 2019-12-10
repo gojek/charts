@@ -13,6 +13,7 @@ namespace: "hermes"
 kafka:
   cluster: "test"
   topic: "kafqa-test-topic"
+  configmap: kafqa-proto
 
 producer:
   enabled: true

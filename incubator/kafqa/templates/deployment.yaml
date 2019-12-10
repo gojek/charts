@@ -27,9 +27,9 @@ spec:
     spec:
       containers:
       - name: kafqa
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        command: ["/bin/bash","-c","go get github.com/gojekfarm/kafqa && kafqa && ls /"]
+        command: ["/bin/bash","-c","go get -v github.com/gojekfarm/kafqa && kafqa && ls /"]
         env:
           - name: KAFKA_CLUSTER
             value: {{ .Values.kafka.cluster | quote }}
@@ -93,14 +93,28 @@ spec:
             value: {{ .Values.opentracing.jaegerAgentHost | default "localhost" | quote }}
           - name: JAEGER_AGENT_PORT
             value: {{ .Values.opentracing.jaegerAgentPort | default 6831 | quote }}
+{{- if .Values.consumer.protoMessage }}
+          - name: PROTO_PARSER_ENABLED
+            value: "true"
+          - name: PROTO_PARSER_MESSAGE_NAME
+            value: {{ .Values.consumer.protoMessage.Name | quote  }}
+          - name: PROTO_PARSER_FILE_PATH
+            value: {{ .Values.consumer.protoMessage.FilePath | quote }}
+          - name: PROTO_PARSER_TIMESTAMP_INDEX
+            value: {{ .Values.consumer.protoMessage.TimestampIndex | quote }}
+{{- end }}
           - name: POD_NAME
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
           - name: DEPLOYMENT
             value: {{ include "kafqa.fullname" . }}
-
+{{- if .Values.consumer.protoMessage }}
+        volumeMounts:
+        - name: kafqa-proto-config
+          mountPath: {{ default "/usr/src" .Values.consumer.mountPath | quote }}
         resources: 
+{{- end }}
 {{ toYaml .Values.resources.kafqa | indent 12 }}
       - name: jaeger-agent
         image: jaegertracing/jaeger-agent:latest
@@ -136,3 +150,8 @@ spec:
       - name: telegraf-conf
         configMap:
           name: {{ .Release.Name }}-telegrafd
+{{- if .Values.consumer.protoMessage }}
+      - name: kafqa-proto-config
+        configMap:
+          name: {{ .Values.configmap }}
+{{- end }}
