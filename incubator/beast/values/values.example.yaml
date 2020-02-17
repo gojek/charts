@@ -1,6 +1,6 @@
 image:
   repository: gojektech/beast
-  tag: f29f085b57b10de41b094004916b5129b89ab19a
+  tag: f85653778cb32915a54bae62ec1f9eeb618b77d6
   pullPolicy: Always
 
 nameOverride: "beast-deployment"
@@ -8,22 +8,51 @@ fullnameOverride: "beast-deployment"
 
 replicaCount: "1"
 
-namespace: development
+namespace: beast
 
 configArgs:
-  bqDatasetName: "beast"
-  bqTableName: "beast-deployment"
+  bqDatasetName: "bq-dataset"
+  bqProjectName: "bq-project"
+  bqTableName: "beast_bq_table_name"
+  bqTablePartitionKey: "partition-field-name"
   bqWorkerPoolSize: "40"
-  googleCredentials: "service-account.json"
-  kafkaConsumerBootstrapServers: "localhost:9092"
+  bqWorkerPollTimeoutMs: "50"
+  enableBqTablePartitioning: true
+  enableBqRowInsertid: true
+  protoColumnMapping: '{"1":"sample-column1","2":"sample-column2","3":"sample-column3"}}'
+  protoSchema: "protoname" 
+  kafkaConsumerGroupId: "helm-test-consumer-g1"
+  kafkaConsumerKeyDeserializer: "org.apache.kafka.common.serialization.ByteArrayDeserializer"
+  kafkaConsumerValueDeserializer: "org.apache.kafka.common.serialization.ByteArrayDeserializer"
+  kafkaTopic: "beast-topic-name"
+  kafkaConsumerAutoOffsetReset: "earliest"
+  kafkaConsumerBootstrapServers: "kafka-bootstrap-servers-list"
   kafkaConsumerMaxPollRecords: "100"
   kafkaConsumerMetadataMaxAgeMs: "500"
   kafkaConsumerSessionTimeoutMs: "10000"
+  offsetAckTimeout: "150000"
+  columnMappingCheckDuplicates: false
+  consumerPollTimeoutMs: "120000"
+  exponentialBackoffRate: "2"
+  exponentialBackoffInitialBackoffInMs: "10"
+  exponentialBackoffMaximumBackoffInMs: "60000"
+  googleCredentials: "/root/service-account.json"
+  enableGcsErrorSink: true
+  gcsBucket: "gcs-bucket-name"
+  gcsPathPrefix: "prefix-directory-path"
+  gcsWriterProjectName: "gcp-project-name"
   logLevel: "INFO"
   readQueueCapacity: "500"
   commitQueueCapacity: "800"
+  statsdEnabled: true
+  statsdHost: "localhost"
+  statsdPort: "8125"
+  stencilUrl: "http://<stencil-url>"
+  sentryDsn: "http://<sentry-url>"
   statsdPrefix: "beast"
   sentrySampleRate: "1.0"
-  enableAutoSchemaUpdate: false
-  secretName: "bq-service-account-secret"
-  
+  enableAutoSchemaUpdate: true
+  secretName: "beast"
+  deploymentName: "beast-deployment-name"
+  refreshCache: true
+  tilInMinutes: "30"

@@ -4,34 +4,53 @@ metadata:
   name: {{ include "beast.fullname" . }}
   namespace: {{ .Values.namespace }}
 data:
-  BQ_DATASET_NAME: "{{ .Values.configArgs.bqDatasetName }}"
-  BQ_TABLE_NAME: "{{ .Values.configArgs.bqTableName }}"
+  BQ_DATASET_NAME: "{{ required "A valid BQ dataset name" .Values.configArgs.bqDatasetName }}"
+  BQ_PROJECT_NAME: "{{ required "A valid BQ project name" .Values.configArgs.bqProjectName }}"
+  BQ_TABLE_NAME: "{{ required "A valid BQ table name" .Values.configArgs.bqTableName }}"
   BQ_WORKER_POOL_SIZE: "{{ .Values.configArgs.bqWorkerPoolSize }}"
-  GOOGLE_CREDENTIALS: "{{ .Values.configArgs.googleCredentials }}"
-  KAFKA_CONSUMER_BOOTSTRAP_SERVERS: "{{ .Values.configArgs.kafkaConsumerBootstrapServers }}"
+  BQ_WORKER_POLL_TIMEOUT_MS: "{{ .Values.configArgs.bqWorkerPollTimeoutMs | default 5000 }}"
+  ENABLE_BQ_TABLE_PARTITIONING: "{{ .Values.configArgs.enableBqTablePartitioning | default false }}"
+  {{ if .Values.configArgs.enableBqTablePartitioning }}
+  BQ_TABLE_PARTITION_KEY: "{{ required "BQ table partition field name should be set" .Values.configArgs.bqTablePartitionKey }}"
+  {{ end }}
+  ENABLE_BQ_ROW_INSERTID: "{{ .Values.configArgs.enableBqRowInsertid | default true }}"
+  ENABLE_AUTO_SCHEMA_UPDATE: "{{ .Values.configArgs.enableAutoSchemaUpdate | default false }}"
+  KAFKA_CONSUMER_BOOTSTRAP_SERVERS: "{{ required "valid kafka broker addresses" .Values.configArgs.kafkaConsumerBootstrapServers }}"
   KAFKA_CONSUMER_GROUP_ID: "{{ include "beast.fullname" . }}"
-  KAFKA_CONSUMER_KEY_DESERIALIZER: org.apache.kafka.common.serialization.ByteArrayDeserializer
+  KAFKA_CONSUMER_KEY_DESERIALIZER: "org.apache.kafka.common.serialization.ByteArrayDeserializer"
   KAFKA_CONSUMER_MAX_POLL_RECORDS: "{{ .Values.configArgs.kafkaConsumerMaxPollRecords }}"
   KAFKA_CONSUMER_METADATA_MAX_AGE_MS: "{{ .Values.configArgs.kafkaConsumerMetadataMaxAgeMs }}"
   KAFKA_CONSUMER_SESSION_TIMEOUT_MS: "{{ .Values.configArgs.kafkaConsumerSessionTimeoutMs }}"
   KAFKA_CONSUMER_VALUE_DESERIALIZER: "org.apache.kafka.common.serialization.ByteArrayDeserializer"
-  KAFKA_TOPIC: "{{ .Values.configArgs.kafkaTopic }}"
-  LOG_LEVEL: "{{ .Values.configArgs.logLevel }}"
+  KAFKA_TOPIC: "{{ required "valid kafka topic to consume from" .Values.configArgs.kafkaTopic }}"
+  KAFKA_CONSUMER_AUTO_OFFSET_RESET: "{{ .Values.configArgs.kafkaConsumerAutoOffsetReset | default latest }}"
   PROTO_COLUMN_MAPPING: '{{ .Values.configArgs.protoColumnMapping }}'
-  PROTO_SCHEMA: "{{ .Values.configArgs.protoSchema }}"
+  PROTO_SCHEMA: "{{ required "valid proto schema name" .Values.configArgs.protoSchema }}"
+  CONSUMER_POLL_TIMEOUT_MS: "{{ .Values.configArgs.consumerPollTimeoutMs }}"
+  EXPONENTIAL_BACKOFF_INITIAL_BACKOFF_IN_MS: "{{ .Values.configArgs.exponentialBackoffInitialBackoffInMs }}"
+  EXPONENTIAL_BACKOFF_MAXIMUM_BACKOFF_IN_MS: "{{ .Values.configArgs.exponentialBackoffMaximumBackoffInMs }}"
   READ_QUEUE_CAPACITY: "{{ .Values.configArgs.readQueueCapacity }}"
   COMMIT_QUEUE_CAPACITY: "{{ .Values.configArgs.commitQueueCapacity }}"
-  STATSD_ENABLED: "true"
-  STATSD_HOST: "localhost"
-  STATSD_PORT: "8125"
-  STATSD_PREFIX: "{{ .Values.configArgs.statsdPrefix }}"
-  STENCIL_URL: "{{ .Values.configArgs.stencilURL }}"
-  SENTRY_DSN: "{{ .Values.configArgs.sentryDsn | default " " }}"
-  SENTRY_SAMPLE_RATE: {{ .Values.configArgs.sentrySampleRate | default 1.0 | quote }}
-  OFFSET_ACK_TIMEOUT: {{ .Values.configArgs.offsetAckTimeout | default 60000 | quote }}
-  BQ_WORKER_POLL_TIMEOUT_MS: {{ .Values.configArgs.bqWorkerPollTimeout | default 5000 | quote }}
-  {{ if .Values.configArgs.enableAutoSchemaUpdate }}
-  PROTO_COLUMN_MAPPING_URL: {{ .Values.configArgs.protoColumnMappingURL | default nil }}
-  UPDATE_TABLE_SCHEMA_URL: {{ .Values.configArgs.updateTableSchemaURL }}
+  LOG_LEVEL: "{{ .Values.configArgs.logLevel | default INFO }}"
+  ENABLE_GCS_ERROR_SINK: "{{ .Values.configArgs.enableGcsErrorSink | default false }}"
+  {{ if .Values.configArgs.enableGcsErrorSink }}
+  GCS_BUCKET: "{{ required "A valid gcs bucket is required if gcs error sink is enabled" .Values.configArgs.gcsBucket }}"
+  GCS_PATH_PREFIX: "{{ required "A valid gcs path prefix is required if gcs error sink is enabled" .Values.configArgs.gcsPathPrefix }}"
+  GCS_WRITER_PROJECT_NAME: "{{ required "A valid gcs project name is required if gcs error sink is enabled" .Values.configArgs.gcsWriterProjectName }}"
   {{ end }}
-  ENABLE_AUTO_SCHEMA_UPDATE: "{{ .Values.configArgs.enableAutoSchemaUpdate | default false }}"
+  STATSD_ENABLED: "{{ .Values.configArgs.statsdEnabled | default false }}"
+  {{ if .Values.configArgs.statsdEnabled }}
+  STATSD_HOST: "{{ .Values.configArgs.statsdHost }}"
+  STATSD_PORT: "{{ .Values.configArgs.statsdPort }}"
+  STATSD_PREFIX: "{{ .Values.configArgs.statsdPrefix }}"
+  {{ end }}
+  STENCIL_URL: "{{ required "a valid stencil url to fetch the proto descriptors" .Values.configArgs.stencilUrl }}"
+  SENTRY_DSN: "{{ .Values.configArgs.sentryDsn }}"
+  SENTRY_SAMPLE_RATE: "{{ .Values.configArgs.sentrySampleRate | default 1.0 }}"
+  OFFSET_ACK_TIMEOUT: "{{ .Values.configArgs.offsetAckTimeout | default 60000 }}"
+  GOOGLE_CREDENTIALS: "{{ required "valid google credentials" .Values.configArgs.googleCredentials }}"
+  DEPLOYMENT_NAME: "{{ include "beast.fullname" . }}"
+  REFRESH_CACHE: "{{ .Values.configArgs.refreshCache }}"
+  {{ if .Values.configArgs.refreshCache }}
+  TIL_IN_MINUTES: "{{ .Values.configArgs.tilInMinutes }}"
+  {{ end }}

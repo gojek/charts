@@ -5,6 +5,9 @@ metadata:
   namespace: beast
 data:
   telegraf.conf: |-
+    [global_tags]
+      deployment="$DEPLOYMENT_NAME"
+
     [[outputs.influxdb]]
       urls = ["<influxdbURL>"] # required
       database = "beast" # required
@@ -13,90 +16,115 @@ data:
       timeout = "5s"
     [[inputs.statsd]]
       service_address = ":8125"
-    [[inputs.jolokia]]
+    [[inputs.jolokia2_agent]]
       name_override = "beast_worker"
-      context = "/jolokia/"
-    [[inputs.jolokia.servers]]
-      name = "beast-consumer-car"
-      host = "127.0.0.1"
-      port = "7777"
+      urls = ["http://127.0.0.1:7777/jolokia"]
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
+      name = "kafka"
+      mbean = "kafka.consumer:type=consumer-fetch-manager-metrics,client-id=consumer-*"
+      paths = ["records-lag-max"]
+      field_name = "kafka_records_lag_max"
+
+    [[inputs.jolokia2_agent.metric]]
+      name = "kafka"
+      mbean = "kafka.consumer:type=consumer-fetch-manager-metrics,client-id=consumer-*,topic=*,partition=*"
+      paths = ["records-lag"]
+      tag_keys = ["partition"]
+      field_name = "kafka_records_lag_by_partition"
+
+    [[inputs.jolokia2_agent.metric]]
       name = "heap_memory_usage"
       mbean  = "java.lang:type=Memory"
-      attribute = "HeapMemoryUsage"
+      paths = ["HeapMemoryUsage"]
+      field_prefix = "memory_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "non_heap_memory_usage"
       mbean  = "java.lang:type=Memory"
-      attribute = "NonHeapMemoryUsage"
+      paths = ["NonHeapMemoryUsage"]
+      field_prefix = "memory_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "thread_count"
       mbean  = "java.lang:type=Threading"
-      attribute = "TotalStartedThreadCount,ThreadCount,DaemonThreadCount,PeakThreadCount"
+      paths = ["TotalStartedThreadCount,ThreadCount,DaemonThreadCount,PeakThreadCount"]
+      field_prefix = "thread_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "class_count"
       mbean  = "java.lang:type=ClassLoading"
-      attribute = "LoadedClassCount,UnloadedClassCount,TotalLoadedClassCount"
+      paths = ["LoadedClassCount,UnloadedClassCount,TotalLoadedClassCount"]
+      field_prefix = "class_"
 
-    [[inputs.jolokia.metrics]]
-      name = "class_count"
+    [[inputs.jolokia2_agent.metric]]
+      name = "os"
       mbean  = "java.lang:type=OperatingSystem"
-      attribute = "MaxFileDescriptorCount,ProcessCpuTime,AvailableProcessors,SystemCpuLoad,TotalSwapSpaceSize,OpenFileDescriptorCount,FreePhysicalMemorySize,CommittedVirtualMemorySize,ProcessCpuLoad,FreeSwapSpaceSize,TotalPhysicalMemorySize"
+      paths = ["MaxFileDescriptorCount,ProcessCpuTime,AvailableProcessors,SystemCpuLoad,TotalSwapSpaceSize,OpenFileDescriptorCount,FreePhysicalMemorySize,CommittedVirtualMemorySize,ProcessCpuLoad,FreeSwapSpaceSize,TotalPhysicalMemorySize"]
+      field_prefix = "os_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "tenured_gen_memorypool"
       mbean = "java.lang:name=Tenured Gen,type=MemoryPool"
-      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,UsageThresholdCount,UsageThreshold,PeakUsage"
+      paths = ["CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,UsageThresholdCount,UsageThreshold,PeakUsage"]
+      field_prefix = "memory_tenured_gen_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "par_eden_space_gen_memorypool"
       mbean = "java.lang:name=Par Eden Space,type=MemoryPool"
-      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"
+      paths = ["CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"]
+      field_prefix = "memory_par_eden_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "par_survivor_memorypool"
       mbean = "java.lang:name=Par Survivor Space,type=MemoryPool"
-      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"
+      paths = ["CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"]
+      field_prefix = "memory_par_survivor_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "g1_survivor_memorypool"
       mbean = "java.lang:name=G1 Survivor Space,type=MemoryPool"
-      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"
+      paths = ["CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"]
+      field_prefix = "memory_g1_survivor_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "g1_eden_memorypool"
       mbean = "java.lang:name=G1 Eden Space,type=MemoryPool"
-      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"
+      paths = ["CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,PeakUsage"]
+      field_prefix = "memory_g1_eden_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "g1_oldgen_memorypool"
       mbean = "java.lang:name=G1 Old Gen,type=MemoryPool"
-      attribute = "CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,UsageThresholdCount,UsageThreshold,PeakUsage"
+      paths = ["CollectionUsageThresholdExceeded,CollectionUsage,CollectionUsageThresholdSupported,CollectionUsageThreshold,Usage,UsageThresholdCount,UsageThreshold,PeakUsage"]
+      field_prefix = "memory_g1_oldgen_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "garbage_collection_parnew"
       mbean  = "java.lang:name=ParNew,type=GarbageCollector"
-      attribute = "ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"
+      paths = ["ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"]
+      field_prefix = "gc_parnew_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "garbage_collection_marksweep"
       mbean  = "java.lang:name=MarkSweepCompact,type=GarbageCollector"
-      attribute = "ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"
+      paths = ["ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"]
+      field_prefix = "gc_marksweep_"
 
-    [[inputs.jolokia.metrics]]
-      name = "uptime"
+    [[inputs.jolokia2_agent.metric]]
+      name  = "jvm_runtime"
       mbean  = "java.lang:type=Runtime"
-      attribute = "Uptime"
+      paths = ["Uptime"]
+      field_prefix = "uptime_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "garbage_collection_g1_young"
       mbean  = "java.lang:name=G1 Young Generation,type=GarbageCollector"
-      attribute = "ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"
+      paths = ["ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"]
+      field_prefix = "gc_g1_young_"
 
-    [[inputs.jolokia.metrics]]
+    [[inputs.jolokia2_agent.metric]]
       name = "garbage_collection_g1_old"
       mbean  = "java.lang:name=G1 Old Generation,type=GarbageCollector"
-      attribute = "ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"
+      paths = ["ObjectName,CollectionCount,Valid,CollectionTime,LastGcInfo,MemoryPoolNames"]
+      field_prefix = "gc_g1_old_"
