@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "albatross.fullname" . }}
+  labels:
+{{ include "albatross.labels" . | indent 4 }}
+  namespace: {{ .Values.deployment.metadata.namespace }}
+spec:
+  replicas: {{ .Values.deployment.spec.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "albatross.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "albatross.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: {{ .Values.containers.command }}
+          env:
+            - name: HELM_DEBUG
+              value: "true"
+            - name: HELM_REPOSITORY_CONFIG
+              value:  "{{ .Values.config.home_dir }}/repository/repositories.yaml"
+            - name: HELM_HOME
+              value: {{ .Values.config.home_dir }}
+            - name: XDG_DATA_HOME
+              value:  {{ .Values.config.home_dir }}
+            - name: XDG_CACHE_HOME
+              value:  {{ .Values.config.home_dir }}/repository
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          {{- if .Values.deployment.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.appPort }}
+            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.appPort }}
+            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: {{ include "albatross.fullname" . }}-storage
+              mountPath: /helm
+            - name: repositories-config
+              subPath: repositories.yaml
+              mountPath: {{ .Values.config.home_dir }}/repository/repositories.yaml
+      volumes:
+        - name: {{ include "albatross.fullname" . }}-storage
+          persistentVolumeClaim:
+            claimName: {{ include "albatross.fullname" . }}-volumeclaim
+        - name: repositories-config
+          configMap:
+            name: {{ .Values.config.name }}

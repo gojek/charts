@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.config.name }}
+  namespace: {{ .Values.deployment.metadata.namespace }}
+data:
+  repositories.yaml: >-
+    repositories:
+  {{ range .Values.config.repositories }}
+    - caFile: ""
+      certFile: ""
+      keyFile: ""
+      name: {{ .name }}
+      url: {{ .url }}
+      password: ""
+      username: ""
+  {{- end }}

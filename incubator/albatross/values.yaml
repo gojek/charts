@@ -1,0 +1,43 @@
+# Default values for albatross
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+deployment:
+  metadata:
+    namespace: helming
+  spec:
+    replicas: 2
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 3
+    timeoutSeconds: 3
+image:
+  repository: gojektech/albatross
+  tag: latest
+  pullPolicy: Always
+containers:
+  command: ["./bin/albatross"]
+pvc:
+  accessMode: ReadWriteOnce
+  storageRequest: 200Mi
+  storageClassName: custom-wc
+
+config:
+  name: "helm-repository-config"
+  home_dir: /helm/config
+  repositories:
+    - name: gojektech-incubator
+      url: https://charts.gojek.tech/incubator/
+    - name: gojek-incubator
+      url: http://chartmuseum.golabs.io/incubator
+    - name: k8s-charts
+      url: https://kubernetes-charts.storage.googleapis.com
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: "albatross"
+
+service:
+  type: LoadBalancer
+  port: 80
+
+appPort: 8080

@@ -1,0 +1,14 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "albatross.fullname" . }}-volumeclaim
+  namespace: {{ .Values.deployment.metadata.namespace }}
+  labels:
+    app: {{ include "albatross.fullname" . }}
+spec:
+  accessModes:
+    - {{ .Values.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.storageRequest }}
+  storageClassName: {{ .Values.pvc.storageClassName | default "standard" }}
