@@ -37,6 +37,10 @@ spec:
               value:  {{ .Values.config.home_dir }}
             - name: XDG_CACHE_HOME
               value:  {{ .Values.config.home_dir }}/repository
+           {{- if .Values.multiClusterSupport }}
+            - name: KUBECONFIG
+              value: {{ .Values.config.home_dir }}/kubeconfig
+           {{- end }}
           ports:
             - name: http
               containerPort: 80
@@ -60,13 +64,33 @@ spec:
           volumeMounts:
             - name: {{ include "albatross.fullname" . }}-storage
               mountPath: /helm
-            - name: repositories-config
+            - name: config
               subPath: repositories.yaml
               mountPath: {{ .Values.config.home_dir }}/repository/repositories.yaml
+           {{- if .Values.multiClusterSupport }}
+            - name: k8s-secrets
+              mountPath: {{ .Values.config.home_dir }}/secrets
+            - name: k8s-config
+              subPath: kubeconfig
+              mountPath: {{ .Values.config.home_dir }}/kubeconfig
+           {{- end }}
       volumes:
         - name: {{ include "albatross.fullname" . }}-storage
           persistentVolumeClaim:
             claimName: {{ include "albatross.fullname" . }}-volumeclaim
-        - name: repositories-config
+        - name: config
           configMap:
-            name: {{ .Values.config.name }}
+            name: {{ include "albatross.fullname" . }}-config
+{{- if .Values.multiClusterSupport }}
+        - name: k8s-config
+          configMap:
+            name: {{ include "albatross.fullname" . }}-kubeconfig
+        - name: k8s-secrets
+          secret:
+            secretName: {{ include "albatross.fullname" . }}-secret
+            items:
+              {{- range .Values.secrets }}
+              - key: {{ .key }}
+                path: {{ .key }}
+              {{- end }}
+{{- end }}

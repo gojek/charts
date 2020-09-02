@@ -1,0 +1,34 @@
+{{- if .Values.multiClusterSupport }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "albatross.fullname" . }}-kubeconfig
+  namespace: {{ .Values.deployment.metadata.namespace }}
+data:
+  kubeconfig: |-
+    apiVersion: v1
+    kind: Config
+    preferences: {}
+    clusters:
+    {{- range .Values.kubeconfig.clusters }}
+    - cluster:
+       certificate-authority-data: {{ .caData }}
+       server: {{ .server }}
+      name: {{ .name }}
+    {{- end }}
+    contexts:
+{{- range .Values.kubeconfig.contexts }}
+    - context:
+        cluster: {{ .cluster }}
+        namespace: {{ .namespace }}
+        user: {{ .user }}
+      name: {{ .cluster }}-ctx
+{{- end }}
+    users:
+    {{- range .Values.kubeconfig.users }}
+    - name: {{ .name }}
+      user:
+        client-certificate-data: {{ .clientCertData }}
+        client-key-data: {{ .clientKeyData }}
+    {{- end }}
+{{- end }}

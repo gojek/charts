@@ -16,14 +16,20 @@ image:
   tag: latest
   pullPolicy: Always
 containers:
-  command: ["./bin/albatross"]
+  command: ["albatross"]
 pvc:
   accessMode: ReadWriteOnce
   storageRequest: 200Mi
-  storageClassName: custom-wc
+  storageClassName: custom-storage-01
 
+# Value of secrets should be base64 encoded
+secrets:
+  - key: secret-key-0
+    value: c2VjcmV0LWtleS12YWx1ZS0wCg==
+  - key: data
+    value: ZGF0YS12YWx1ZQo=
 config:
-  name: "helm-repository-config"
+  name: "albatross-config"
   home_dir: /helm/config
   repositories:
     - name: gojektech-incubator
@@ -34,8 +40,26 @@ config:
       url: https://kubernetes-charts.storage.googleapis.com
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "albatross"
+fullnameOverride: ""
+multiClusterSupport: false
 
+# caData and clientCert & key data should be base 64 encoded
+kubeconfig:
+  clusters:
+    - name: cluster-integration
+      server: https://10.20.0.1
+      caData: Y2FDbGllbnRDZXJ0QmFzZTY0RW5jb2RlZAo=
+    - name: cluster-test
+      server: https://10.20.0.2
+      caData: Y2FDbGllbnRDZXJ0QmFzZTY0RW5jb2RlZAo=
+  contexts:
+    - cluster: cluster-integration
+      namespace: helming
+      user: albatross
+  users:
+    - name: albatross
+      clientCertData: Y2xpZW50Q2VydGlmaWNhdGVCYXNlNjRFbmNvZGVkCg==
+      clientKeyData: Y2xpZW50Q2VydGlmaWNhdGVCYXNlNjRFbmNvZGVkCg==
 service:
   type: LoadBalancer
   port: 80
