@@ -6,7 +6,7 @@ metadata:
 data:
   repositories.yaml: >-
     repositories:
-  {{- range .Values.config.repositories }}
+  {{ range .Values.config.repositories }}
     - caFile: ""
       certFile: ""
       keyFile: ""
