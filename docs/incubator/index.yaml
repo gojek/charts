@@ -1,5 +1,33 @@
 apiVersion: v1
 entries:
+  albatross:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2020-10-12T18:55:45.702735+05:30
+    description: Helm chart to deploy albatross
+    digest: 9c0dfd575003771b919d89e6fe8e71ee7db56c8258414c6ec83ea21e2b716059
+    name: albatross
+    urls:
+    - albatross/albatross-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2020-10-12T18:55:45.702246+05:30
+    description: Helm chart to deploy albatross
+    digest: 4ac24876510877355ed5264afb5eb5eed4beb26c7be24a91f9a2271fa5163a36
+    name: albatross
+    urls:
+    - albatross/albatross-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2020-10-12T18:55:45.700643+05:30
+    description: Helm chart to deploy albatross
+    digest: 1e4d5ac68b9a01e8d36b7df86f0e1ea6eacf34cd7bdaaab09633680b7944083d
+    name: albatross
+    urls:
+    - albatross/albatross-0.1.0.tgz
+    version: 0.1.0
   beast:
   - apiVersion: v1
     appVersion: "1.0"
@@ -295,4 +323,4 @@ entries:
     urls:
     - twemproxy/twemproxy-0.1.0.tgz
     version: 0.1.0
-generated: 2020-01-10T12:57:54.593447+08:00
+generated: 2020-10-12T18:55:45.699781+05:30
