@@ -30,6 +30,7 @@ We appreciate pull requests; here are our guidelines:
 - Use the same coding conventions as the rest of the project.
 - Open a [pull request][7] that relates to *only* one subject with a clear title
   and description in grammatically correct, complete sentences.
+- Run build.sh to update index.yaml for the updated chart.
 
 Much Thanks! ❤❤❤
 
