@@ -29,7 +29,7 @@ spec:
       - name: kafqa
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        command: ["/bin/bash","-c","go get -v github.com/gojekfarm/kafqa && kafqa && ls /"]
+        command: {{ .Values.image.command }}
         env:
           - name: KAFKA_CLUSTER
             value: {{ .Values.kafka.cluster | quote }}
