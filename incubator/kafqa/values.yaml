@@ -64,6 +64,7 @@ image:
   repository: gojektech/kafqa
   tag: latest
   pullPolicy: IfNotPresent
+  command: '["kafqa"]'
 
 nameOverride: ""
 fullnameOverride: ""
