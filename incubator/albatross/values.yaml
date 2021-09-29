@@ -33,11 +33,7 @@ config:
   home_dir: /helm/config
   repositories:
     - name: gojektech-incubator
-      url: https://charts.gojek.tech/incubator/
-    - name: gojek-incubator
-      url: http://chartmuseum.golabs.io/incubator
-    - name: k8s-charts
-      url: https://kubernetes-charts.storage.googleapis.com
+      url: https://gojek.github.io/charts/incubator/
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
