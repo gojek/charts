@@ -22,7 +22,7 @@ data:
         cluster: {{ .cluster }}
         namespace: {{ .namespace }}
         user: {{ .user }}
-      name: {{ .context }}
+      name: {{ .name }}
 {{- end }}
     users:
     {{- range .Values.kubeconfig.users }}

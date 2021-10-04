@@ -54,6 +54,7 @@ kubeconfig:
     - cluster: cluster-integration
       namespace: helming
       user: albatross
+      name: cluster-integration-ctx
   users:
     - name: albatross
       clientCertData: Y2xpZW50Q2VydGlmaWNhdGVCYXNlNjRFbmNvZGVkCg==
