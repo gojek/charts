@@ -9,6 +9,9 @@ metadata:
 {{ include "albatross.labels" . | indent 4 }}
 spec:
   type: {{ .Values.service.type }}
+  {{- if .Values.service.ip }}
+  loadBalancerIP: {{ .Values.service.ip }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.appPort }}
