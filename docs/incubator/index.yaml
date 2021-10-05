@@ -3,6 +3,15 @@ entries:
   albatross:
   - apiVersion: v1
     appVersion: "1.0"
+    created: "2021-10-04T19:59:41.65992+05:30"
+    description: Helm chart to deploy albatross
+    digest: 146fd352399c4346d0ab156bcd13a85fbaeca96fe6aa5ef8f9aee41c83f23a2a
+    name: albatross
+    urls:
+    - albatross/albatross-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v1
+    appVersion: "1.0"
     created: "2021-09-29T15:53:14.561049+05:30"
     description: Helm chart to deploy albatross
     digest: 1a496b3ca5b7f34c6c558079370bcb96a249014109ac80eecf173e0f696ebf21
