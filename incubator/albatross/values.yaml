@@ -37,6 +37,7 @@ config:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+useStaticRepository: true
 multiClusterSupport: false
 # for first time run enable this or set storage class to default
 createStorageClass: false
