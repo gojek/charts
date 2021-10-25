@@ -68,9 +68,11 @@ spec:
           volumeMounts:
             - name: {{ include "albatross.fullname" . }}-storage
               mountPath: /helm
+            {{- if .Values.useStaticRepository }}
             - name: config
               subPath: repositories.yaml
               mountPath: {{ .Values.config.home_dir }}/repository/repositories.yaml
+            {{- end }}
            {{- if .Values.multiClusterSupport }}
             - name: k8s-secrets
               mountPath: {{ .Values.config.home_dir }}/secrets
@@ -82,9 +84,11 @@ spec:
         - name: {{ include "albatross.fullname" . }}-storage
           persistentVolumeClaim:
             claimName: {{ include "albatross.fullname" . }}-volumeclaim
+        {{- if .Values.useStaticRepository }}
         - name: config
           configMap:
             name: {{ include "albatross.fullname" . }}-config
+        {{- end }}
 {{- if .Values.multiClusterSupport }}
         - name: k8s-config
           configMap:

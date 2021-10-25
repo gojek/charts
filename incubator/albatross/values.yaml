@@ -28,6 +28,8 @@ secrets:
     value: c2VjcmV0LWtleS12YWx1ZS0wCg==
   - key: data
     value: ZGF0YS12YWx1ZQo=
+
+# setting useStaticRepository: false will drop support for config.repositories
 config:
   name: "albatross-config"
   home_dir: /helm/config
@@ -37,6 +39,9 @@ config:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+# set useStaticRepository: false to use PUT /repositories in albatross
+useStaticRepository: true
 multiClusterSupport: false
 # for first time run enable this or set storage class to default
 createStorageClass: false
