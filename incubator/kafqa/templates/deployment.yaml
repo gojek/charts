@@ -113,8 +113,8 @@ spec:
         volumeMounts:
         - name: kafqa-proto-config
           mountPath: {{ default "/usr/src" .Values.consumer.mountPath | quote }}
-        resources: 
 {{- end }}
+        resources: 
 {{ toYaml .Values.resources.kafqa | indent 12 }}
       - name: jaeger-agent
         image: jaegertracing/jaeger-agent:latest
