@@ -241,6 +241,15 @@ entries:
   kafqa:
   - apiVersion: v1
     appVersion: "1.0"
+    created: "2022-02-14T12:23:44.69897+05:30"
+    description: A Helm chart for Kafqa
+    digest: 4a841ea440aebb1233a67e0c2ac9ddd0260ea5161f07cde04f7f0230e9a53b77
+    name: kafqa
+    urls:
+    - kafqa/kafqa-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v1
+    appVersion: "1.0"
     created: "2021-06-08T18:27:14.367646+05:30"
     description: A Helm chart for Kafqa
     digest: 9bda31d5e25b7e0b60d03fe54382198837ac37bc1d496453762c0821feb77757
