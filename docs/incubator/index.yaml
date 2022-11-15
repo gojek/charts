@@ -84,6 +84,15 @@ entries:
     - beast/beast-0.1.0.tgz
     version: 0.1.0
   envoy-lb-operator:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2022-11-15T10:50:20.118947+05:30"
+    description: A Helm chart for Envoy LB Operator
+    digest: 09a2bd67f7bd97331e3a1a63fdd0eb75f576cd3790a695582538a6863ddf2eea
+    name: envoy-lb-operator
+    urls:
+    - envoy-lb-operator/envoy-lb-operator-1.0.0.tgz
+    version: 1.0.0
   - apiVersion: v1
     appVersion: "1.0"
     created: 2020-01-10T12:57:54.597617+08:00
@@ -386,4 +395,4 @@ entries:
     urls:
     - twemproxy/twemproxy-0.1.0.tgz
     version: 0.1.0
-generated: 2020-10-12T18:55:45.699781+05:30
+generated: "2022-11-15T10:50:20.108275+05:30"
