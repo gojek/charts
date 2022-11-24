@@ -37,16 +37,16 @@ $ helm install gojektech-incubator/kafqa --name my-release --values=values.yaml
 | kafka.topic | string | `"kafqa-test-topic"` | Topic in Kafka to use |
 | librd | object | `{"batchSize":10000,"enabled":false,"queueMaxSize":10000,"queuedMinMessages":30000,"statsIntervalMs":500}` | Configuration for Librd |
 | nameOverride | string | `""` |  |
-| namespace | string | `"hermes"` |  |
+| namespace | string | `"hermes"` | Namespace to deploy Kafqa to |
 | nodeSelector | object | `{}` |  |
-| opentracing | object | `{"collectorHost":"localhost","collectorPort":80,"jaegerDisabled":false,"jaegerReportLogSpans":true}` | Agent is sidecar, and it pushes data collector which could be remote |
+| opentracing | object | `{"collectorHost":"localhost","collectorPort":80,"jaegerDisabled":true,"jaegerReportLogSpans":true}` | Agent is sidecar, and it pushes data collector which could be remote |
 | producer.concurrency | int | `1` | Number of producers to run simultaneously |
 | producer.enabled | bool | `true` | Boolean value to enable or disable producer |
 | producer.kafkaBrokers | string | `"localhost:9092"` | Kafka host for producer. Format host:port,host2:port |
 | producer.totalMessages | int | `-1` | Number of messages to produce |
 | producer.workerDelayMs | int | `50` | Delay between messages produced in milliseconds |
-| prometheus | object | `{"addAnnotations":true,"enabled":true,"port":9090,"token":"test","url":"https://localhost:8080/v1/prom/metrics"}` | Prometheus configurations |
-| prometheus.addAnnotations | bool | `true` | Flag for adding annotations to be scraped by prometheus operator |
+| prometheus | object | `{"addAnnotations":false,"enabled":true,"port":9090,"token":"test","url":"https://localhost:8080/v1/prom/metrics"}` | Prometheus configurations |
+| prometheus.addAnnotations | bool | `false` | Flag for adding annotations to be scraped by prometheus operator |
 | prometheus.enabled | bool | `true` | Enable or disable generation of prometheus specific metrics |
 | prometheus.port | int | `9090` | URL port on which prometheus metrics are available |
 | prometheus.token | string | `"test"` | Remote write token for prometheus for telegraf  |

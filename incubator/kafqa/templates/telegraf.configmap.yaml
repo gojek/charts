@@ -24,7 +24,8 @@ data:
     [[inputs.internal]]
       collect_memstats = false
 
-{{- if .Values.telegraf.statsEnabled }}
+{{- if .Values.telegraf.statsdEnabled }}
+
     [[inputs.statsd]]
       allowed_pending_messages = 100000
       delete_counters = false
@@ -42,6 +43,7 @@ data:
 {{- end }}
 
 {{- if .Values.telegraf.prometheusEnabled }}
+
     [[inputs.prometheus]]
       urls = ["http://localhost:{{ .Values.prometheus.port }}/metrics"]
       namepass = ["kafqa*"]

@@ -11,7 +11,7 @@ appDurationMs: "5000000000"
 acks: "1"
 # -- Port on which application will run
 appPort: 8081
-# -- Namespace to deploy to, gets overriden by helm --namespace
+# -- Namespace to deploy Kafqa to
 namespace: "hermes"
 # -- Which configmap to use for proto
 configmap: kafqa-proto
@@ -96,7 +96,7 @@ telegraf:
 opentracing:
     collectorHost: localhost
     collectorPort: 80
-    jaegerDisabled: false
+    jaegerDisabled: true
     jaegerReportLogSpans: true
 
 # -- Kafqa docker image details
