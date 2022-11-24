@@ -2,7 +2,9 @@ apiVersion: v1
 data:
   telegraf.conf: |-
     [global_tags]
-      cluster_name = {{ .Values.environment | quote }}
+      {{- range $key, $val := .Values.telegraf.labels }}
+      {{ $key }} = {{ $val | quote }}
+      {{- end}}
     [agent]
       collection_jitter = "0s"
       debug = false
@@ -22,6 +24,7 @@ data:
     [[inputs.internal]]
       collect_memstats = false
 
+{{- if .Values.telegraf.statsEnabled }}
     [[inputs.statsd]]
       allowed_pending_messages = 100000
       delete_counters = false
@@ -36,6 +39,13 @@ data:
         99
       ]
       service_address = ":8125"
+{{- end }}
+
+{{- if .Values.telegraf.prometheusEnabled }}
+    [[inputs.prometheus]]
+      urls = ["http://localhost:{{ .Values.prometheus.port }}/metrics"]
+      namepass = ["kafqa*"]
+{{- end }}
 
     [[outputs.prometheus_remote_write]]
       url = {{ .Values.prometheus.url | quote }}

@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/name: {{ .Release.Name }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -19,10 +18,12 @@ spec:
       labels:
         app.kubernetes.io/name: {{ .Release.Name }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Values.prometheus.addAnnotations }}
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/metrics"
         prometheus.io/port: "9090"
+{{- end }}
       namespace: {{ .Values.namespace }}
     spec:
       containers:
@@ -116,6 +117,7 @@ spec:
 {{- end }}
         resources: 
 {{ toYaml .Values.resources.kafqa | indent 12 }}
+{{- if not .Values.opentracing.jaegerDisabled}}
       - name: jaeger-agent
         image: jaegertracing/jaeger-agent:latest
         imagePullPolicy: IfNotPresent
@@ -138,14 +140,14 @@ spec:
           requests:
             cpu: 500m
             memory: 64Mi
+{{- end }}
       - name: telegrafd
         image: {{ .Values.telegraf.image.repository }}:{{ .Values.telegraf.image.tag }}
         volumeMounts:
         - name: telegraf-conf
           mountPath: /etc/telegraf
         resources: 
-{{ toYaml .Values.resources.telegraf | indent 12 }}
-         
+{{ toYaml .Values.resources.telegraf | indent 12 }}       
       volumes:
       - name: telegraf-conf
         configMap:
