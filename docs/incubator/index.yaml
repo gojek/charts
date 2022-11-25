@@ -248,6 +248,17 @@ entries:
     - iap-auth/iap-auth-0.1.16.tgz
     version: 0.1.16
   kafqa:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2022-11-25T11:01:50.451239+05:30"
+    description: A quality analyser, measuring data loss, ops, latency
+    digest: 66d198f290cc75cd932cdde9e0944086dd461e311cf4ec28effe19da398ef6dc
+    home: https://github.com/gojek/kafqa/
+    name: kafqa
+    type: application
+    urls:
+    - kafqa/kafqa-1.0.0.tgz
+    version: 1.0.0
   - apiVersion: v1
     appVersion: "1.0"
     created: "2022-02-14T12:23:44.69897+05:30"
