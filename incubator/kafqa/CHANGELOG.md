@@ -11,7 +11,7 @@ This chart version focuses on adding support for prometheus metrics to be scrape
 
 ### Added
 
-- Support for adding labels to metrics instead of default `cluster_name` using `telegraf.labels`.
+- Support for adding labels to metrics instead of default `cluster_name` using `telegraf.globalTags`.
 - Now we can disable prometheus default scraping which used to be permanent annotations. This can be controlled setting `prometheus.addAnnotations` to true or false.
 - Prometheus and Statsd input to telegraf will be controllable by setting `telegraf.prometheusEnabled` and `telegraf.statsdEnabled` to true and false.
 - Helm docs README for better understanding of chart.
