@@ -2,7 +2,7 @@ apiVersion: v1
 data:
   telegraf.conf: |-
     [global_tags]
-      {{- range $key, $val := .Values.telegraf.labels }}
+      {{- range $key, $val := .Values.telegraf.globalTags }}
       {{ $key }} = {{ $val | quote }}
       {{- end}}
     [agent]
@@ -46,7 +46,6 @@ data:
 
     [[inputs.prometheus]]
       urls = ["http://localhost:{{ .Values.prometheus.port }}/metrics"]
-      namepass = ["kafqa*"]
 {{- end }}
 
     [[outputs.prometheus_remote_write]]

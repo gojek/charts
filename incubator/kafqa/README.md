@@ -1,6 +1,6 @@
 # kafqa
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
 
 A quality analyser, measuring data loss, ops, latency
 
@@ -54,9 +54,9 @@ $ helm install gojektech-incubator/kafqa --name my-release --values=values.yaml
 | replicaCount | int | `1` |  |
 | resources | object | `{"kafqa":{"limits":{"cpu":"512m","memory":"512Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"telegraf":{"limits":{"cpu":"100m","memory":"128Mi"},"requests":{"cpu":"50m","memory":"50Mi"}}}` | Resources to specify for Kafqa or telegraf |
 | stats | object | `{"enabled":true,"host":"localhost","port":8125}` | Statsd configurations |
-| telegraf | object | `{"image":{"repository":"telegraf","tag":"latest"},"labels":{"cluster_name":"production"},"prometheusEnabled":true,"statsdEnabled":true}` | Telegraf configuration |
+| telegraf | object | `{"globalTags":{"cluster_name":"production"},"image":{"repository":"telegraf","tag":"latest"},"prometheusEnabled":true,"statsdEnabled":true}` | Telegraf configuration |
+| telegraf.globalTags | object | `{"cluster_name":"production"}` | Specify which labels to add to metrics |
 | telegraf.image | object | `{"repository":"telegraf","tag":"latest"}` | Specify which telegraf image to use |
-| telegraf.labels | object | `{"cluster_name":"production"}` | Specify which labels to add to metrics |
 | telegraf.prometheusEnabled | bool | `true` | Specify if input for prometheus should be added or not |
 | telegraf.statsdEnabled | bool | `true` | Specify if input for statsd should be added or not |
 | tolerations | list | `[]` |  |

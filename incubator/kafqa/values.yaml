@@ -89,7 +89,7 @@ telegraf:
   # -- Specify if input for statsd should be added or not
   statsdEnabled: true
   # -- Specify which labels to add to metrics
-  labels:
+  globalTags:
     cluster_name: "production"
 
 # -- Agent is sidecar, and it pushes data collector which could be remote
