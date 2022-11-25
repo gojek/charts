@@ -45,8 +45,8 @@ $ helm install gojektech-incubator/kafqa --name my-release --values=values.yaml
 | producer.kafkaBrokers | string | `"localhost:9092"` | Kafka host for producer. Format host:port,host2:port |
 | producer.totalMessages | int | `-1` | Number of messages to produce |
 | producer.workerDelayMs | int | `50` | Delay between messages produced in milliseconds |
-| prometheus | object | `{"addAnnotations":false,"enabled":true,"port":9090,"token":"test","url":"https://localhost:8080/v1/prom/metrics"}` | Prometheus configurations |
-| prometheus.addAnnotations | bool | `false` | Flag for adding annotations to be scraped by prometheus operator |
+| prometheus | object | `{"addAnnotations":true,"enabled":true,"port":9090,"token":"test","url":"https://localhost:8080/v1/prom/metrics"}` | Prometheus configurations |
+| prometheus.addAnnotations | bool | `true` | Flag for adding annotations to be scraped by prometheus operator |
 | prometheus.enabled | bool | `true` | Enable or disable generation of prometheus specific metrics |
 | prometheus.port | int | `9090` | URL port on which prometheus metrics are available |
 | prometheus.token | string | `"test"` | Remote write token for prometheus for telegraf  |
