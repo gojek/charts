@@ -3,33 +3,55 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-# Use "development" to get debug logs
+# -- Use "development" to get debug logs. This sets the env in Kafqa container
 environment: "production"
+# -- Specifies how long producer should produce message for if producer.totalMessages is not -1
 appDurationMs: "5000000000"
+# -- Specifies ack needed for producer
 acks: "1"
+# -- Port on which application will run
 appPort: 8081
+# -- Namespace to deploy Kafqa to
 namespace: "hermes"
+# -- Which configmap to use for proto
+configmap: kafqa-proto
 
+
+# -- Details of Kafka broker and topic to use
 kafka:
+  # -- Cluster name for Kafka broker
   cluster: "test"
+  # -- Topic in Kafka to use
   topic: "kafqa-test-topic"
-  configmap: kafqa-proto
 
+# Producer config
 producer:
+  # -- Boolean value to enable or disable producer
   enabled: true
+  # -- Kafka host for producer. Format host:port,host2:port
   kafkaBrokers: "localhost:9092"
+  # -- Number of messages to produce
   totalMessages: -1
+  # -- Number of producers to run simultaneously
   concurrency: 1
+  # -- Delay between messages produced in milliseconds
   workerDelayMs: 50
 
 consumer:
+  # -- Boolean value to enable or disable consumer
   enabled: true
+  # -- Kafka host for consumer. Format host:port,host2:port
   kafkaBrokers: "localhost:9092"
+  # -- Consumer group id to use
   groupId: "consumer-test-001"
+  # -- Simultaneous consumers to run
   concurrency: 1
+  # -- Timeout for polling in consumer
   pollTimeoutMs: 300
+  # -- Enable or disable auto commit
   enableAutoCommit: true
 
+# -- Configuration for Librd
 librd:
   enabled: false
   queueMaxSize: 10000
@@ -37,29 +59,47 @@ librd:
   queuedMinMessages: 30000
   statsIntervalMs: 500
 
+# -- Prometheus configurations
 prometheus:
+  # -- Enable or disable generation of prometheus specific metrics
   enabled: true
+  # -- Flag for adding annotations to be scraped by prometheus operator
+  addAnnotations: true
+  # -- URL port on which prometheus metrics are available
   port: 9090
+  # -- Remote write url for prometheus for telegraf 
   url: "https://localhost:8080/v1/prom/metrics"
+  # -- Remote write token for prometheus for telegraf 
   token: "test"
 
+# -- Statsd configurations
 stats:
   enabled: true
   host: "localhost"
   port: 8125
 
+# -- Telegraf configuration
 telegraf:
+  # -- Specify which telegraf image to use
   image:
     repository: telegraf
     tag: latest
+  # -- Specify if input for prometheus should be added or not
+  prometheusEnabled: true
+  # -- Specify if input for statsd should be added or not
+  statsdEnabled: true
+  # -- Specify which labels to add to metrics
+  globalTags:
+    cluster_name: "production"
 
-# Agent is sidecar, and it pushes data collector which could be remote
+# -- Agent is sidecar, and it pushes data collector which could be remote
 opentracing:
     collectorHost: localhost
     collectorPort: 80
-    jaegerDisabled: false
+    jaegerDisabled: true
     jaegerReportLogSpans: true
 
+# -- Kafqa docker image details
 image:
   repository: gojektech/kafqa
   tag: latest
@@ -69,6 +109,7 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
+# -- Resources to specify for Kafqa or telegraf
 resources:
   kafqa: 
     limits:
