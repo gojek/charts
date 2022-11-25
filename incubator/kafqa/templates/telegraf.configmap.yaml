@@ -56,3 +56,5 @@ data:
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-telegrafd
+  labels:
+    {{- include "kafqa.labels" . | nindent 4 }}
